@@ -73,12 +73,8 @@ function onSubmitRanking() {
     data: { rankedChoices }
   })
   .done( function( msg ) {
-    console.log( "ajax completed")
-    alert( "Data Saved: " + msg );
   })
   .fail( function(err) {
-    console.log( "ajax failed", err );
   });
-  console.log("ajax fired off");
 }
 
