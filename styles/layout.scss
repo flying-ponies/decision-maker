@@ -1,7 +1,7 @@
-body {
-  background-color: #EEE;
+$font-family-base: Georgia;
 
-  h1 {
-    color: #244751;
-  }
+@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+body {
+  padding-top: 50px;
 }
