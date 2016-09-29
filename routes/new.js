@@ -17,7 +17,7 @@ module.exports = (knex) => {
     // POST KEYS TO DB
     // PROCESS REQ BODY
     // POST PROCESSED INFO TO DB
-    res.redirect("urls/admin/" + privatePollKey);
+    res.redirect("polls/admin/" + privatePollKey);
   });
 
   return router;

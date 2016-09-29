@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head') %>
+  <body>
+    <script>
+      $( function() {
+        $( "ul.droptrue" ).sortable({
+          connectWith: "ul"
+        });
+      });
+    </script>
+<%- include('partials/header') %>
+    <div class="container">
+      <div class="page-header">
+        <h1>Make Up Your Mind</h1>
+      </div>
+      <h2>Where do you want to eat tonight?</h2>
+      <p>Poll creator: null@null.com</p>
+      <div class="row">
+        <div class="col-sm-6">
+          <ul class="droptrue">
+            <li>Option 1</li>
+            <li>Option 2</li>
+          </ul>
+        </div>
+        <div class="col-sm-6">
+          <ul class="droptrue">
+            <li>Option 1</li>
+            <li>Option 2</li>
+          </ul>
+        </div>
+      </div>
+    </div><!-- /.container -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </body>
+</html>
