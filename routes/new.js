@@ -7,7 +7,7 @@ const uuid = require('node-uuid');
 module.exports = (knex) => {
 
   router.get('/', (req, res) => {
-    res.end('CREATE A NEW POLL PAGE')
+    res.render('index')
   });
 
   router.post('/polls', (req, res) => {
