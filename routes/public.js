@@ -47,7 +47,7 @@ module.exports = (knex) => {
   router.post('/polls/:key', (req, res) => {
     // REQ BODY FROM POST GETS PROCESSED AND PUT IN TO DB
     // AJAX WILL HANDLE PAGE UPDATE
-    return router;
+    res.end("Rankings Received");
   });
 
   return router;

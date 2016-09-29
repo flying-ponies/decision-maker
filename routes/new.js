@@ -3,6 +3,7 @@
 const express = require('express');
 const router  = express.Router();
 const uuid = require('node-uuid');
+const mailgun  = require('mailgun-js')({apiKey: process.env.MG_API_KEY, domain: process.env.MG_DOMAIN});
 
 module.exports = (knex) => {
 
@@ -18,6 +19,27 @@ module.exports = (knex) => {
     const email = req.body.email;
     const optionTitle = req.body['option-title'];
     const optionDescription = req.body['option-description'];
+    const hostName = req.headers.host;
+
+    var emailData = {
+      from: 'Flying Ponies <flying.ponies.desicion.maker@gmail.com>',
+      to: email,
+      subject: 'Your Decision Making Poll Has Been Created',
+      text: `Your poll has been made your administrative URL is
+      ${hostName}$/polls/admin{privatePollKey}
+
+      your voters URL is
+      ${hostName}$/polls/{public_key}
+
+      Thank you for using Flying-Ponies Decision Maker!!`
+    };
+
+    mailgun.messages().send(emailData, (err, body) => {
+      if(err) {
+        console.log(err);
+      }
+      console.log(body);
+    });
 
     knex('pollers').insert({'email': email}).returning('id').then((resultA) => {
       const pollerId = resultA[0];
