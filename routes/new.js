@@ -11,36 +11,34 @@ module.exports = (knex) => {
   });
 
   router.post('/polls', (req, res) => {
-    //NEEDS TO FILTER OUT EMPTY REQ.BODY
+    //TO DO: NEEDS TO FILTER OUT EMPTY REQ.BODY
     const privatePollKey = uuid.v4();
     const publicPollKey = uuid.v4();
-    let question = req.body.question;
-    let email = req.body.email;
-    let optionTitle = req.body['option-title'];
-    let optionDescription = req.body['option-description'];
+    const question = req.body.question;
+    const email = req.body.email;
+    const optionTitle = req.body['option-title'];
+    const optionDescription = req.body['option-description'];
 
-    return knex('pollers').insert({'email': email}).returning('id').then((resultA) => {
-      let pollerId = resultA[0];
+    knex('pollers').insert({'email': email}).returning('id').then((resultA) => {
+      const pollerId = resultA[0];
       return knex('polls').insert({
         'question': question,
         'poller_id': pollerId,
         'public_key': publicPollKey,
         'private_key': privatePollKey
-      }).returning('id').then((resultB) => {
-        let pollId = resultB[0];
-        optionTitle.forEach((title, index) => {
-          let description = optionDescription[index];
-          return knex('choices').insert({
-            'poll_id': pollId,
-            'title': title,
-            'description': description,
-            'points': 0
-          }).then(() => {
-            if(index === optionTitle.length - 1) res.redirect("polls/admin/" + privatePollKey);
-          });
-        });
+      }).returning('id')
+    }).then((resultB) =>{
+      const pollId = resultB[0];
+      let titleDescriptionKnexPromises = [];
+      optionTitle.forEach((title, index) => {
+        let description = optionDescription[index];
+        titleDescriptionKnexPromises.push(
+          knex('choices').insert({ 'poll_id': pollId, 'title': title, 'description': description, 'points': 0 })
+        );
       });
+      return Promise.all(titleDescriptionKnexPromises).then(() => { res.redirect("polls/admin/" + privatePollKey); });
     });
+
   });
 
   return router;

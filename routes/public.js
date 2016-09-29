@@ -6,7 +6,7 @@ const router  = express.Router();
 module.exports = (knex) => {
 
   router.get('/polls/:key', (req, res) => {
-    let publicPollKey = req.params.key;
+    const publicPollKey = req.params.key;
     knex
       .select("public_key")
       .from("polls")
@@ -25,7 +25,7 @@ module.exports = (knex) => {
               .innerJoin("choices","polls.id","choices.poll_id")
               .where("polls.public_key", publicPollKey),
           ]).then((results) => {
-            let templateVars = {
+            const templateVars = {
               'email': results[0][0].email,
               'question': results[0][0].question,
               'is_open': results[0][0].is_open,
