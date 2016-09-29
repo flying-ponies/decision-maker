@@ -1,3 +1,29 @@
+$color_dropareas: #ccc;
+
 body {
   padding-top: 50px;
+}
+
+
+.droptrue {
+  /*background-color: $color_dropareas;*/
+  padding: 1em;
+}
+
+#ranked-options {
+  border: 1px dotted #777;
+}
+
+#unranked-options {
+
+}
+
+.options-container {
+  background-color: $color_dropareas;
+  border-radius: 6px;
+  border: 1px solid #e3e3e3;
+  padding: 1em;
+  h3 {
+    text-align: center;
+  }
 }
