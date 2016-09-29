@@ -7,7 +7,6 @@ module.exports = (knex) => {
 
   router.get('/polls/admin/:key', (req, res) => {
     let privatePollKey = req.params.key;
-    console.log("HEY");
     knex
       .select("private_key")
       .from("polls")
