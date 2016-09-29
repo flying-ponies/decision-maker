@@ -15,6 +15,8 @@ module.exports = (knex) => {
     const privatePollKey = uuid.v4();
     const publicPollKey = uuid.v4();
     // POST KEYS TO DB
+    // PROCESS REQ BODY
+    // POST PROCESSED INFO TO DB
     res.redirect("urls/admin/" + privatePollKey);
   });
 
