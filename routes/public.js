@@ -37,7 +37,7 @@ module.exports = (knex) => {
           });
 
           //RENDER PAGE USING EJS WITH OBJECT
-          res.end('PUBLIC PAGE');
+          res.render('rankpoll');
         } else {
           res.status(404);
           //ADD PAGE
