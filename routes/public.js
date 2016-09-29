@@ -13,34 +13,29 @@ module.exports = (knex) => {
       .where("public_key", publicPollKey)
       .then((results) => {
         if (results.length) {
-          //GETS INFO FROM DB
-          // knex.multiQuery([
-          //   knex
-          //     .select("pollers.email","polls.question","polls.is_open")
-          //     .from("polls")
-          //     .innerJoin("pollers","polls.poller_id","pollers.id")
-          //     .innerJoin("choices","polls.id","choices.poll_id")
-          //     .where("public_key", publicPollKey),
-          //   knex
-          //     .select("choices.title","choices.description", "points")
-          //     .from("polls")
-          //     .innerJoin("pollers","polls.poller_id","pollers.id")
-          //     .innerJoin("choices","polls.id","choices.poll_id")
-          //     .where("public_key", publicPollKey),
-          // ]).spread((resultA, resultB) => {
-          //   console.log(resultA);
-          //   console.log(resultB);
-          // });
+          Promise.all([
+            knex
+              .select("pollers.email","polls.question","polls.is_open").distinct()
+              .from("polls")
+              .innerJoin("pollers","polls.poller_id","pollers.id")
+              .innerJoin("choices","polls.id","choices.poll_id")
+              .where("public_key", publicPollKey),
+            knex
+              .select("choices.title","choices.description", "points")
+              .from("polls")
+              .innerJoin("pollers","polls.poller_id","pollers.id")
+              .innerJoin("choices","polls.id","choices.poll_id")
+              .where("public_key", publicPollKey),
+          ]).then((results) => {
+            let templateVars = {
+              email: results[0][0].email,
+              question: results[0][0].question,
+              is_open: results[0][0].is_open,
+              choices: results[1]
+            };
+            console.log(templateVars);
+          });
 
-                // let templateVars = {
-                //   email: results[0].email,
-                //   title: results[0].title,
-                //   longURL: longURL,
-                //   "hostName": hostName
-                // };
-                // console.log(templateVars);
-
-          //PUT INFO IN TO OJBECT
           //RENDER PAGE USING EJS WITH OBJECT
           res.end('PUBLIC PAGE');
         } else {
