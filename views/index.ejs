@@ -10,18 +10,18 @@
       <form action="/polls" method="post">
         <div class="form-group">
           <label for="question">What is your question?</label>
-          <input type="text" class="form-control" id="question" placeholder="What should we do tonight?">
+          <input type="text" class="form-control" id="question" name="question" placeholder="What should we do tonight?">
         </div>
         <div class="row">
           <div class="col-sm-4">
             <div class="well">
               <div class="form-group">
                 <label for="option-title-1">Title</label>
-                <input type="text" class="form-control" id="option-title-1" placeholder="Dance">
+                <input type="text" class="form-control" id="option-title-1" name="option-title" placeholder="Dance">
               </div>
               <div class="form-group">
                 <label for="option-description-1">Description</label>
-                <textarea class="form-control" rows="3" id="option-description-1" placeholder="Shake your tailfeathers!"></textarea>
+                <textarea class="form-control" rows="3" id="option-description-1" name="option-description" placeholder="Shake your tailfeathers!"></textarea>
               </div>
             </div><!-- /.well -->
           </div><!-- /.col -->
@@ -29,11 +29,11 @@
             <div class="well">
               <div class="form-group">
                 <label for="option-title-2">Title</label>
-                <input type="text" class="form-control" id="option-title-2" placeholder="Attend the Theatre">
+                <input type="text" class="form-control" id="option-title-2" name="option-title" placeholder="Attend the Theatre">
               </div>
               <div class="form-group">
                 <label for="option-description-2">Description</label>
-                <textarea class="form-control" rows="3" id="option-description-2" placeholder="Watch some thespians pretend"></textarea>
+                <textarea class="form-control" rows="3" id="option-description-2" name="option-description" placeholder="Watch some thespians pretend"></textarea>
               </div>
             </div><!-- /.well -->
           </div><!-- /.col -->
@@ -45,7 +45,7 @@
         </div><!-- /.row -->
         <div class="form-group">
           <label for="email">Email address</label>
-          <input type="email" class="form-control" id="email" placeholder="email@example.com">
+          <input type="email" class="form-control" id="email" name="email" placeholder="email@example.com">
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
       </form>

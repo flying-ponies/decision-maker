@@ -6,8 +6,7 @@ const router  = express.Router();
 module.exports = (knex) => {
 
   router.get('/polls/admin/:key', (req, res) => {
-    let privatePollKey = req.params.key;
-    console.log("HEY");
+    const privatePollKey = req.params.key;
     knex
       .select("private_key")
       .from("polls")
@@ -16,19 +15,17 @@ module.exports = (knex) => {
         if (results.length) {
           Promise.all([
             knex
-              .select("pollers.email","polls.question","polls.is_open","polls.public_key").distinct()
+              .select("pollers.email","polls.question","polls.is_open","polls.public_key")
               .from("polls")
               .innerJoin("pollers","polls.poller_id","pollers.id")
-              .innerJoin("choices","polls.id","choices.poll_id")
-              .where("public_key", publicPollKey),
+              .where("polls.private_key", privatePollKey),
             knex
-              .select("choices.title","choices.description", "points")
+              .select("choices.id","choices.title","choices.description", "points")
               .from("polls")
-              .innerJoin("pollers","polls.poller_id","pollers.id")
               .innerJoin("choices","polls.id","choices.poll_id")
-              .where("public_key", publicPollKey),
+              .where("polls.private_key", privatePollKey),
           ]).then((results) => {
-            let templateVars = {
+            const templateVars = {
               'privatePollKey': privatePollKey,
               'publicPollKey': results[0][0].public_key,
               'email': results[0][0].email,
@@ -38,9 +35,6 @@ module.exports = (knex) => {
             };
             console.log(templateVars);
           });
-
-
-
 
           //RENDER PAGE USING EJS WITH OBJECT
           res.end('ADMIN PAGE');

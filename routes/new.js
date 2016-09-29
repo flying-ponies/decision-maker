@@ -11,13 +11,34 @@ module.exports = (knex) => {
   });
 
   router.post('/polls', (req, res) => {
-    // NEED REQ BODY TO POST ON TO DB
+    //TO DO: NEEDS TO FILTER OUT EMPTY REQ.BODY
     const privatePollKey = uuid.v4();
     const publicPollKey = uuid.v4();
-    // POST KEYS TO DB
-    // PROCESS REQ BODY
-    // POST PROCESSED INFO TO DB
-    res.redirect("polls/admin/" + privatePollKey);
+    const question = req.body.question;
+    const email = req.body.email;
+    const optionTitle = req.body['option-title'];
+    const optionDescription = req.body['option-description'];
+
+    knex('pollers').insert({'email': email}).returning('id').then((resultA) => {
+      const pollerId = resultA[0];
+      return knex('polls').insert({
+        'question': question,
+        'poller_id': pollerId,
+        'public_key': publicPollKey,
+        'private_key': privatePollKey
+      }).returning('id')
+    }).then((resultB) =>{
+      const pollId = resultB[0];
+      let titleDescriptionKnexPromises = [];
+      optionTitle.forEach((title, index) => {
+        let description = optionDescription[index];
+        titleDescriptionKnexPromises.push(
+          knex('choices').insert({ 'poll_id': pollId, 'title': title, 'description': description, 'points': 0 })
+        );
+      });
+      return Promise.all(titleDescriptionKnexPromises).then(() => { res.redirect("polls/admin/" + privatePollKey); });
+    });
+
   });
 
   return router;

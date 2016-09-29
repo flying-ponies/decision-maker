@@ -6,7 +6,7 @@ const router  = express.Router();
 module.exports = (knex) => {
 
   router.get('/polls/:key', (req, res) => {
-    let publicPollKey = req.params.key;
+    const publicPollKey = req.params.key;
     knex
       .select("public_key")
       .from("polls")
@@ -15,19 +15,17 @@ module.exports = (knex) => {
         if (results.length) {
           Promise.all([
             knex
-              .select("pollers.email","polls.question","polls.is_open").distinct()
+              .select("pollers.email","polls.question","polls.is_open")
               .from("polls")
               .innerJoin("pollers","polls.poller_id","pollers.id")
-              .innerJoin("choices","polls.id","choices.poll_id")
-              .where("public_key", publicPollKey),
+              .where("polls.public_key", publicPollKey),
             knex
-              .select("choices.title","choices.description", "points")
+              .select("choices.id","choices.title","choices.description", "points")
               .from("polls")
-              .innerJoin("pollers","polls.poller_id","pollers.id")
               .innerJoin("choices","polls.id","choices.poll_id")
-              .where("public_key", publicPollKey),
+              .where("polls.public_key", publicPollKey),
           ]).then((results) => {
-            let templateVars = {
+            const templateVars = {
               'email': results[0][0].email,
               'question': results[0][0].question,
               'is_open': results[0][0].is_open,
