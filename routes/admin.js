@@ -15,17 +15,15 @@ module.exports = (knex) => {
         if (results.length) {
           Promise.all([
             knex
-              .select("pollers.email","polls.question","polls.is_open","polls.public_key").distinct()
+              .select("pollers.email","polls.question","polls.is_open","polls.public_key")
               .from("polls")
               .innerJoin("pollers","polls.poller_id","pollers.id")
-              .innerJoin("choices","polls.id","choices.poll_id")
-              .where("private_key", privatePollKey),
+              .where("polls.private_key", privatePollKey),
             knex
-              .select("choices.title","choices.description", "points")
+              .select("choices.id","choices.title","choices.description", "points")
               .from("polls")
-              .innerJoin("pollers","polls.poller_id","pollers.id")
               .innerJoin("choices","polls.id","choices.poll_id")
-              .where("private_key", privatePollKey),
+              .where("polls.private_key", privatePollKey),
           ]).then((results) => {
             let templateVars = {
               'privatePollKey': privatePollKey,
@@ -37,9 +35,6 @@ module.exports = (knex) => {
             };
             console.log(templateVars);
           });
-
-
-
 
           //RENDER PAGE USING EJS WITH OBJECT
           res.end('ADMIN PAGE');
