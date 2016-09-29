@@ -34,10 +34,10 @@ module.exports = (knex) => {
               'choices': results[1]
             };
             console.log(templateVars);
+          //RENDER PAGE USING EJS WITH OBJECT
+            res.render('rankpoll', templateVars);
           });
 
-          //RENDER PAGE USING EJS WITH OBJECT
-          res.render('rankpoll');
         } else {
           res.status(404);
           //ADD PAGE
