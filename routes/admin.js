@@ -14,8 +14,34 @@ module.exports = (knex) => {
       .where("private_key", privatePollKey)
       .then((results) => {
         if (results.length) {
-          //GETS INFO FROM DB
-          //PUT INFO IN TO OJBECT
+          Promise.all([
+            knex
+              .select("pollers.email","polls.question","polls.is_open","polls.public_key").distinct()
+              .from("polls")
+              .innerJoin("pollers","polls.poller_id","pollers.id")
+              .innerJoin("choices","polls.id","choices.poll_id")
+              .where("public_key", publicPollKey),
+            knex
+              .select("choices.title","choices.description", "points")
+              .from("polls")
+              .innerJoin("pollers","polls.poller_id","pollers.id")
+              .innerJoin("choices","polls.id","choices.poll_id")
+              .where("public_key", publicPollKey),
+          ]).then((results) => {
+            let templateVars = {
+              'privatePollKey': privatePollKey,
+              'publicPollKey': results[0][0].public_key,
+              'email': results[0][0].email,
+              'question': results[0][0].question,
+              'is_open': results[0][0].is_open,
+              'choices': results[1]
+            };
+            console.log(templateVars);
+          });
+
+
+
+
           //RENDER PAGE USING EJS WITH OBJECT
           res.end('ADMIN PAGE');
         } else {

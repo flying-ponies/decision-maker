@@ -28,10 +28,10 @@ module.exports = (knex) => {
               .where("public_key", publicPollKey),
           ]).then((results) => {
             let templateVars = {
-              email: results[0][0].email,
-              question: results[0][0].question,
-              is_open: results[0][0].is_open,
-              choices: results[1]
+              'email': results[0][0].email,
+              'question': results[0][0].question,
+              'is_open': results[0][0].is_open,
+              'choices': results[1]
             };
             console.log(templateVars);
           });
