@@ -2,13 +2,7 @@
 <html lang="en">
 <%- include('partials/head') %>
   <body>
-    <script>
-      $( function() {
-        $( "ul.droptrue" ).sortable({
-          connectWith: "ul"
-        });
-      });
-    </script>
+    <script type="text/javascript" src="/scripts/ranking.js"></script>
 <%- include('partials/header') %>
     <div class="container">
       <div class="page-header">
@@ -21,8 +15,9 @@
           <div class="options-container">
             <h3>Unranked Options</h3>
             <ul class="droptrue list-group" id="unranked-options">
-              <li class="list-group-item">Option 1</li>
-              <li class="list-group-item">Option 2</li>
+              <% choices.forEach( function( choice ) {%>
+                <%- include( 'partials/pollChoice', choice ); %>
+              <% }); %>
             </ul>
           </div>
         </div>
@@ -30,8 +25,6 @@
           <div class="options-container">
             <h3>Ranked Options</h3>
             <ul class="droptrue list-group" id="ranked-options">
-              <li class="list-group-item">Option 1</li>
-              <li class="list-group-item">Option 2</li>
             </ul>
           </div>
         </div>
