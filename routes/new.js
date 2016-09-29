@@ -14,17 +14,30 @@ router.use(bodyParser.urlencoded({ extended: true }));
   });
 
   router.post('/polls', (req, res) => {
-    // NEED REQ BODY TO POST ON TO DB
-    console.log("req.headers");
-    console.log(req.headers);
-    console.log("req.body");
-    console.log(req.body);
+    //NEEDS TO FILTER OUT EMPTY REQ.BODY
     const privatePollKey = uuid.v4();
     const publicPollKey = uuid.v4();
-    // POST KEYS TO DB
-    // PROCESS REQ BODY
-    // POST PROCESSED INFO TO DB
-    res.redirect("polls/admin/" + privatePollKey);
+    let question = req.body.question;
+    let email = req.body.email;
+    let optionTitle = req.body['option-title'];
+    let optionDescription = req.body['option-description'];
+    return knex('pollers').insert({'email': email}).returning('id').then((resultA) => {
+      let pollerId = resultA[0];
+      return knex('polls').insert({'question': question,
+        'poller_id': pollerId,
+        'public_key': publicPollKey,
+        'private_key': privatePollKey
+      }).returning('id').then((resultB) => {
+        let pollId = resultB[0];
+        optionTitle.forEach((title, index) => {
+          let description = optionDescription[index];
+          return knex('choices').insert({'poll_id': pollId, 'title': title, 'description': description, 'points': 0}).then(() => {
+            res.redirect("polls/admin/" + privatePollKey);
+          });
+        });
+      });
+    });
+
   });
 
   return router;

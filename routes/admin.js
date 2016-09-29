@@ -19,13 +19,13 @@ module.exports = (knex) => {
               .from("polls")
               .innerJoin("pollers","polls.poller_id","pollers.id")
               .innerJoin("choices","polls.id","choices.poll_id")
-              .where("public_key", publicPollKey),
+              .where("private_key", privatePollKey),
             knex
               .select("choices.title","choices.description", "points")
               .from("polls")
               .innerJoin("pollers","polls.poller_id","pollers.id")
               .innerJoin("choices","polls.id","choices.poll_id")
-              .where("public_key", publicPollKey),
+              .where("private_key", privatePollKey),
           ]).then((results) => {
             let templateVars = {
               'privatePollKey': privatePollKey,
