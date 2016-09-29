@@ -48,7 +48,7 @@ module.exports = (knex) => {
 
   router.put('/polls/admin/:key', (req, res) => {
     //OPEN AND CLOSES POLL
-    return router;
+    res.end("Updates Received");
   });
 
   return router;
