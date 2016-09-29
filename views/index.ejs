@@ -1,17 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home Page</title>
-
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
-  </head>
-
-  <body>
-    <h1>Hello World!</h1>
+<%- include('partials/header') %>
+    <div class="container">
+      <div class="page-header">
+        <h1>Make Up Your Mind</h1>
+      </div>
+      <form action="/polls" method="post">
+        <div class="form-group">
+          <label for="question">What is your question?</label>
+          <input type="text" class="form-control" id="question" placeholder="What should we do tonight?">
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="well">
+              <div class="form-group">
+                <label for="option-title-1">Title</label>
+                <input type="text" class="form-control" id="option-title-1" placeholder="Dance">
+              </div>
+              <div class="form-group">
+                <label for="option-description-1">Description</label>
+                <textarea class="form-control" rows="3" id="option-description-1" placeholder="Shake your tailfeathers!"></textarea>
+              </div>
+            </div><!-- /.well -->
+          </div><!-- /.col -->
+          <div class="col-sm-4">
+            <div class="well">
+              <div class="form-group">
+                <label for="option-title-2">Title</label>
+                <input type="text" class="form-control" id="option-title-2" placeholder="Attend the Theatre">
+              </div>
+              <div class="form-group">
+                <label for="option-description-2">Description</label>
+                <textarea class="form-control" rows="3" id="option-description-2" placeholder="Watch some thespians pretend"></textarea>
+              </div>
+            </div><!-- /.well -->
+          </div><!-- /.col -->
+          <div class="col-sm-4">
+            <div class="well">
+              <button class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            </div><!-- /.well -->
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" class="form-control" id="email" placeholder="email@example.com">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+    </div><!-- /.container -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </body>
 </html>
