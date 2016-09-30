@@ -3,7 +3,7 @@
 const express = require('express');
 const router  = express.Router();
 const uuid = require('node-uuid');
-const sendEmail = require('../lib/email_templates')
+const sendEmail = require('../lib/send_email')
 
 module.exports = (knex) => {
 
