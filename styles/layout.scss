@@ -16,30 +16,34 @@ $font_headers: 'Bungee', $font_main;
 
 body {
   font-family: $font_main;
-  padding-top: 50px;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $font_headers;
 }
 
-.navbar.navbar-default {
-  // height: $header_height;
-}
-
 .page-header {
+  $header_h1_size: 42px;
+  padding: ($header_height) - ($header_h1_size*2) 0;
   margin-top: 0;
   height: $header_height;
   background-color: $color_header;
   h1 {
-    font-size: 3.5em;
-    margin:0;
-    display: inline-block;
+    height: $header_h1_size;
+    font-size: $header_h1_size;
+    margin: 0;
+    display: block;
     color: #fff;
-    line-height: $header_height;
+    line-height: 0.9em;
+    small {
+      color: $color_secondary;
+      &:hover {
+        color: $color_accent;
+      }
+    }
   }
   a {
-    line-height: $header_height;
+    text-decoration: none;
   }
 }
 
