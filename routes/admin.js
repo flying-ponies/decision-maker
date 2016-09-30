@@ -33,11 +33,10 @@ module.exports = (knex) => {
               'is_open': results[0][0].is_open,
               'choices': results[1]
             };
-            console.log(templateVars);
+            //RENDER PAGE USING EJS WITH OBJECT
+            res.render('admin', templateVars);
           });
 
-          //RENDER PAGE USING EJS WITH OBJECT
-          res.end('ADMIN PAGE');
         } else {
           res.status(404);
           //ADD PAGE

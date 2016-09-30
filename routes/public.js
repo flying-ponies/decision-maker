@@ -2,6 +2,8 @@
 
 const express = require('express');
 const router  = express.Router();
+const mailgun  = require('mailgun-js')({apiKey: process.env.MG_API_KEY, domain: process.env.MG_DOMAIN});
+const emailTemplates = require('../lib/email_templates')
 
 module.exports = (knex) => {
 
@@ -45,9 +47,47 @@ module.exports = (knex) => {
   });
 
   router.post('/polls/:key', (req, res) => {
-    // REQ BODY FROM POST GETS PROCESSED AND PUT IN TO DB
+    const rankedChoices = req.body.rankedChoices;
+    const publicPollKey = req.params.key;
+    const hostName = req.headers.host;
+    let updateChoices = [];
+
+    rankedChoices.forEach((element) => {
+      let id = Number(element.id);
+      let rank = element.rank;
+      let voterPoints = Number(element.borda);
+      knex.select('points').from('choices').where('id', id).then((results) => {
+        let currentPoints = Number(results[0].points);
+        let resultPoints = currentPoints + voterPoints;
+        updateChoices.push(
+          knex('choices').update({points: resultPoints}).where('id', id).then()
+        );
+      });
+    });
+    Promise.all(updateChoices).then(() => {
+      knex
+        .select("pollers.email","polls.private_key")
+        .from('polls')
+        .innerJoin("pollers","polls.poller_id","pollers.id")
+        .where('polls.public_key', publicPollKey)
+        .then((results) => {
+          let email = results[0].email;
+          let privatePollKey = results[0].private_key;
+
+          var emailData = emailTemplates(email, privatePollKey, publicPollKey, hostName).newVote;
+
+          mailgun.messages().send(emailData, (err, body) => {
+            if(err) {
+              console.log(err);
+            }
+            console.log(body);
+          });
+
+          res.end("Rankings Received" );
+        });
+    });
     // AJAX WILL HANDLE PAGE UPDATE
-    res.end("Rankings Received");
+
   });
 
   return router;

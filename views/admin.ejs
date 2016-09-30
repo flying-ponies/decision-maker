@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head') %>
+  <body>
+<%- include('partials/header') %>
+    <div class="container">
+      <div class="page-header">
+        <h1>Make Up Your Mind</h1>
+      </div>
+      <h2><%= question %></h2>
+      <p>Friends&rsquo; link: <a href="/polls/<%= publicPollKey %>">/polls/<%= publicPollKey %></a></p>
+      <p>Your (private) link: <a href="/polls/admin/<%= privatePollKey %>">/polls/admin/<%= privatePollKey %></a></p>
+      <div>
+      <% choices.sort((a, b) => { return b.points - a.points; }); %>
+      <% choices.forEach((choice, index) => { %>
+        <% index === 0 && choice.points > 0 ? choice.winner = true : choice.winner = false; %>
+        <%- include('partials/pollresult', choice); %>
+      <% }); %>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="well">
+            <h4>Message the poll to your friends!</h4>
+            <form action="/sms/sendpoll" method="post">
+              <div class="form-group">
+                <label for="phone-number">Phone number</label>
+                <input type="number" class="form-control" id="phone-number" name="phone-number" placeholder="6041234559" aria-describedby="phone-number-help" max="9999999999">
+                <span id="phone-number-help" class="help-block">Enter a phone number (no spaces or dashes) and we&rsquo;ll send the poll in an sms message.</span>
+                <input type="hidden" name="private_key" value="<%= privatePollKey %>">
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+          </div><!-- /.well -->
+        </div>
+        <div class="col-sm-6">
+          <div class="well">
+            <h4>Email the poll to your friends!</h4>
+            <form action="#" method="post">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="friend@example.com" aria-describedby="email-help">
+                <span id="email-help" class="help-block">Enter an email and we&rsquo;ll send the poll.</span>
+                <input type="hidden" name="private_key" value="<%= privatePollKey %>">
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+          </div><!-- /.well -->
+        </div>
+      </div><!-- /.row -->
+      <% if (is_open) { %>
+      <p>All the results in?</p>
+      <button class="btn btn-default">Close poll</button>
+      <% } else { %>
+      <p>Want more feedback?</p>
+      <button class="btn btn-default">Open poll</button>
+      <% } %>
+    </div><!-- /.container -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </body>
+</html>
