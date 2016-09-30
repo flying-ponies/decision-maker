@@ -62,5 +62,8 @@ $(function () {
     optionNum--;
 
     $('#option-title-' + optionNum.toString()).parentsUntil('.row').remove();
+    if (optionNum % 3 === 1) {
+      $('#new-poll-options .row:last-child').remove();
+    }
   });
 });
