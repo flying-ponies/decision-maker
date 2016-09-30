@@ -26,6 +26,7 @@
                 <label for="phone-number">Phone number</label>
                 <input type="number" class="form-control" id="phone-number" name="phone-number" placeholder="6041234559" aria-describedby="phone-number-help" max="9999999999">
                 <span id="phone-number-help" class="help-block">Enter a phone number (no spaces or dashes) and we&rsquo;ll send the poll in an sms message.</span>
+                <input type="hidden" name="private_key" value="<%= privatePollKey %>">
               </div>
               <button type="submit" class="btn btn-default">Submit</button>
             </form>
@@ -39,6 +40,7 @@
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="friend@example.com" aria-describedby="email-help">
                 <span id="email-help" class="help-block">Enter an email and we&rsquo;ll send the poll.</span>
+                <input type="hidden" name="private_key" value="<%= privatePollKey %>">
               </div>
               <button type="submit" class="btn btn-default">Submit</button>
             </form>
