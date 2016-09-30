@@ -37,23 +37,20 @@ module.exports = (knex) => {
                 'is_open': isOpen,
                 'choices': results[1]
               };
-              //console.log(templateVars);
-              //RENDER PAGE USING EJS WITH OBJECT
+              // console.log(templateVars);
+              // RENDER PAGE USING EJS WITH OBJECT
               res.render('rankpoll', templateVars);
             } else if(isOpen && pollTaken) {
               //POLL HAS BEEN TAKEN/POLL RESULTS
               res.end('POLL HAS BEEN TAKEN');
-
             } else {
-              //RENDER POLL CLOSED PAGE/POLL RESULTS
+              // RENDER POLL CLOSED PAGE/POLL RESULTS
               res.end('POLL IS CLOSED');
             }
-
           });
-
         } else {
           res.status(404);
-          //ADD PAGE
+          // ADD PAGE HRER
           res.end("PAGE NOT FOUND");
         }
     });
