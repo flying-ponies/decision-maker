@@ -1,0 +1,15 @@
+<% if (winner) { %>
+<div class="poll-result winner">
+<% } else { %>
+<div class="poll-result">
+<% } %>
+  <div class="row">
+    <div class="col-sm-9 info">
+      <h3><%= title %></h3>
+      <p><%= description %></p>
+    </div>
+    <div class="col-sm-3 points">
+      <%= points %> point<% if (points !== 1) { %>s<% }%>
+    </div>
+  </div>
+</div>
