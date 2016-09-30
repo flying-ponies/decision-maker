@@ -23,6 +23,17 @@ h1, h2, h3, h4, h5, h6 {
   font-family: $font_headers;
 }
 
+footer {
+  border-top: 1px solid $color_primary;
+  padding: 3em 0;
+  margin-top: 3em;
+  background-color: $color_primary;
+  color: $color_secondary;
+  p {
+    margin: 0;
+  }
+}
+
 .sub-heading {
 
 }
