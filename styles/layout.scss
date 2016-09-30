@@ -1,5 +1,11 @@
 $color_dropareas: #ccc;
 
+@media (min-width: 1200px) {
+  .container {
+    width: 970px;
+  }
+}
+
 body {
   padding-top: 50px;
 }
@@ -24,6 +30,32 @@ body {
   border: 1px solid #e3e3e3;
   padding: 1em;
   h3 {
+    text-align: center;
+  }
+}
+
+.poll-result {
+  border: 1px solid #e3e3e3;
+  padding: 1em;
+  margin-bottom: 1em;
+
+  &.winner {
+    background-color: gold;
+    color: white;
+  }
+
+  .points {
+    text-align: right;
+    font-size: 200%;
+    padding: 1em 1em 1em 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .poll-result {
+    text-align: center;
+  }
+  .poll-result .points {
     text-align: center;
   }
 }
