@@ -3,6 +3,8 @@
 const express = require('express');
 const router  = express.Router();
 const sendEmail = require('../lib/send_email')
+//
+var takenPoll = false;
 
 module.exports = (knex) => {
 
@@ -27,7 +29,7 @@ module.exports = (knex) => {
               .where("polls.public_key", publicPollKey),
           ]).then((results) => {
             const isOpen = results[0][0].is_open;
-            if(isOpen) {
+            if(isOpen && !takenPoll) {
               const templateVars = {
                 'email': results[0][0].email,
                 'question': results[0][0].question,
@@ -37,6 +39,10 @@ module.exports = (knex) => {
               console.log(templateVars);
               //RENDER PAGE USING EJS WITH OBJECT
               res.render('rankpoll', templateVars);
+            } else if(isOpen && takenPoll) {
+              //POLL HAS BEEN TAKEN/POLL RESULTS
+              res.end('POLL HAS BEEN TAKEN CLOSED');
+
             } else {
               //RENDER POLL CLOSED PAGE/POLL RESULTS
               res.end('POLL IS CLOSED');
