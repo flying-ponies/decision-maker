@@ -3,7 +3,6 @@
 const express = require('express');
 const router  = express.Router();
 const uuid = require('node-uuid');
-const mailgun  = require('mailgun-js')({apiKey: process.env.MG_API_KEY, domain: process.env.MG_DOMAIN});
 const emailTemplates = require('../lib/email_templates')
 
 module.exports = (knex) => {
@@ -22,14 +21,14 @@ module.exports = (knex) => {
     const optionDescription = req.body['option-description'];
     const hostName = req.headers.host;
 
-    var emailData = emailTemplates(email, privatePollKey, publicPollKey, hostName).create;
+    let emailInfo = {
+      'hostName': hostName,
+      'pollerEmail': email,
+      'privatePollKey': privatePollKey,
+      'publicPollKey': publicPollKey
+    };
 
-    mailgun.messages().send(emailData, (err, body) => {
-      if(err) {
-        console.log(err);
-      }
-      console.log(body);
-    });
+    emailTemplates(emailInfo).createPoll();
 
     knex('pollers').insert({'email': email}).returning('id').then((resultA) => {
       const pollerId = resultA[0];

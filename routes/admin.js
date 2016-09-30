@@ -2,6 +2,7 @@
 
 const express = require('express');
 const router  = express.Router();
+const emailTemplates = require('../lib/email_templates')
 
 module.exports = (knex) => {
 
@@ -45,9 +46,37 @@ module.exports = (knex) => {
     });
   });
 
-  router.put('/polls/admin/:key', (req, res) => {
+  router.post('/polls/admin/:key', (req, res) => {
+    //CHECK IF BLANK BODY
+    const privatePollKey = req.params.key;
+    const friendsEmail = req.body.email
+    const hostName = req.headers.host;
+    knex.select("pollers.email","polls.public_key")
+      .from("polls")
+      .innerJoin("pollers","polls.poller_id","pollers.id")
+      .where("polls.private_key", privatePollKey).then((results) => {
+        let pollerEmail = results[0].email;
+        let publicPollKey = results[0].public_key;
+        let emailInfo = {
+          'hostName': hostName,
+          'privatePollKey': privatePollKey,
+          'publicPollKey': publicPollKey,
+          'pollerEmail': pollerEmail,
+          'friendsEmail': friendsEmail
+        };
+        emailTemplates(emailInfo).toFriend();
+
+        res.end("Updates Received");
+      });
+
     //OPEN AND CLOSES POLL
-    res.end("Updates Received");
+    res.end("Post Received");
+  });
+
+  router.put('/polls/admin/:key', (req, res) => {
+    console.log(req.body);
+
+    //OPEN AND CLOSES POLL
   });
 
   return router;
