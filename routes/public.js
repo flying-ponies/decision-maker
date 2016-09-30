@@ -46,11 +46,12 @@ module.exports = (knex) => {
   });
 
   router.post('/polls/:key', (req, res) => {
+    // TO DO CAN'T VOTE IF POLL IS CLOSED
     const rankedChoices = req.body.rankedChoices;
     const publicPollKey = req.params.key;
     const hostName = req.headers.host;
-    let updateChoices = [];
 
+    let updateChoices = [];
     rankedChoices.forEach((element) => {
       let id = Number(element.id);
       let rank = element.rank;
@@ -59,7 +60,7 @@ module.exports = (knex) => {
         let currentPoints = Number(results[0].points);
         let resultPoints = currentPoints + voterPoints;
         updateChoices.push(
-          knex('choices').update({points: resultPoints}).where('id', id).then()
+          knex('choices').update({'points': resultPoints}).where('id', id).then()
         );
       });
     });

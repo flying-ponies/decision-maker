@@ -31,7 +31,7 @@ module.exports = (knex) => {
               'publicPollKey': results[0][0].public_key,
               'email': results[0][0].email,
               'question': results[0][0].question,
-              'is_open': results[0][0].is_open,
+              'isOpen': results[0][0].is_open,
               'choices': results[1]
             };
             //RENDER PAGE USING EJS WITH OBJECT
@@ -74,9 +74,12 @@ module.exports = (knex) => {
   });
 
   router.put('/polls/admin/:key', (req, res) => {
-    console.log(req.body);
-
     //OPEN AND CLOSES POLL
+    const privatePollKey = req.params.key;
+    const isOpen = !!req.body.isOpen;
+    knex('polls').update({'is_open': isOpen}).where('private_key', privatePollKey).then(() => {
+      res.redirect(`/polls/admin/${privatePollKey}`);
+    });
   });
 
   return router;
