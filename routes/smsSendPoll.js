@@ -20,7 +20,7 @@ module.exports = (knex) => {
         if (results.length) {
           smsPoll += results[0].question;
           for( var i = 0; i < results.length; i++ ) {
-            smsPoll += "\n" + i+1 + " " + results[i].title;
+            smsPoll += "\n" + (Number(i)+1) + " " + results[i].title;
           }
           if( smsPoll.length > 1600 ) {
             smsPoll = smsPoll.slice( 0, 1600 );
