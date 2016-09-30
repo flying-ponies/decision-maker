@@ -87,6 +87,7 @@ module.exports = (knex) => {
         });
     });
     // AJAX WILL HANDLE PAGE UPDATE
+
   });
 
   return router;
