@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router  = express.Router();
-const emailTemplates = require('../lib/email_templates')
+const sendEmail = require('../lib/email_templates')
 
 module.exports = (knex) => {
 
@@ -64,7 +64,7 @@ module.exports = (knex) => {
           'pollerEmail': pollerEmail,
           'friendsEmail': friendsEmail
         };
-        emailTemplates(emailInfo).toFriend();
+        sendEmail(emailInfo).toFriend();
 
         res.end("Updates Received");
       });

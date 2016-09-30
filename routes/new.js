@@ -3,7 +3,7 @@
 const express = require('express');
 const router  = express.Router();
 const uuid = require('node-uuid');
-const emailTemplates = require('../lib/email_templates')
+const sendEmail = require('../lib/email_templates')
 
 module.exports = (knex) => {
 
@@ -28,7 +28,7 @@ module.exports = (knex) => {
       'publicPollKey': publicPollKey
     };
 
-    emailTemplates(emailInfo).createPoll();
+    sendEmail(emailInfo).createPoll();
 
     knex('pollers').insert({'email': email}).returning('id').then((resultA) => {
       const pollerId = resultA[0];

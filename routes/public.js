@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router  = express.Router();
-const emailTemplates = require('../lib/email_templates')
+const sendEmail = require('../lib/send_email')
 
 module.exports = (knex) => {
 
@@ -80,7 +80,7 @@ module.exports = (knex) => {
             'publicPollKey': publicPollKey
           };
 
-          emailTemplates(emailInfo).newVote();
+          sendEmail(emailInfo).newVote();
 
           res.end("Rankings Received" );
         });
