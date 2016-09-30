@@ -26,15 +26,22 @@ module.exports = (knex) => {
               .innerJoin("choices","polls.id","choices.poll_id")
               .where("polls.public_key", publicPollKey),
           ]).then((results) => {
-            const templateVars = {
-              'email': results[0][0].email,
-              'question': results[0][0].question,
-              'is_open': results[0][0].is_open,
-              'choices': results[1]
-            };
-            console.log(templateVars);
-            //RENDER PAGE USING EJS WITH OBJECT
-            res.render('rankpoll', templateVars);
+            const isOpen = results[0][0].is_open;
+            if(isOpen) {
+              const templateVars = {
+                'email': results[0][0].email,
+                'question': results[0][0].question,
+                'is_open': isOpen,
+                'choices': results[1]
+              };
+              console.log(templateVars);
+              //RENDER PAGE USING EJS WITH OBJECT
+              res.render('rankpoll', templateVars);
+            } else {
+              //RENDER POLL CLOSED PAGE/POLL RESULTS
+              res.end('POLL IS CLOSED');
+            }
+
           });
 
         } else {
