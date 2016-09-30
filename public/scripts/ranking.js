@@ -72,6 +72,7 @@ function onSubmitRanking() {
     data: { rankedChoices }
   })
   .done( function( msg ) {
+    window.location.href = window.location.pathname;
   })
   .fail( function(err) {
   });

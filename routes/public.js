@@ -3,13 +3,14 @@
 const express = require('express');
 const router  = express.Router();
 const sendEmail = require('../lib/send_email')
-//
-var takenPoll = false;
 
 module.exports = (knex) => {
 
   router.get('/polls/:key', (req, res) => {
     const publicPollKey = req.params.key;
+    const pollTaken = req.cookies.pollTaken;
+    console.log("COOKIES:");
+    console.log(req.cookies);
     knex
       .select("public_key")
       .from("polls")
@@ -29,19 +30,19 @@ module.exports = (knex) => {
               .where("polls.public_key", publicPollKey),
           ]).then((results) => {
             const isOpen = results[0][0].is_open;
-            if(isOpen && !takenPoll) {
+            if(isOpen && !pollTaken) {
               const templateVars = {
                 'email': results[0][0].email,
                 'question': results[0][0].question,
                 'is_open': isOpen,
                 'choices': results[1]
               };
-              console.log(templateVars);
+              //console.log(templateVars);
               //RENDER PAGE USING EJS WITH OBJECT
               res.render('rankpoll', templateVars);
-            } else if(isOpen && takenPoll) {
+            } else if(isOpen && pollTaken) {
               //POLL HAS BEEN TAKEN/POLL RESULTS
-              res.end('POLL HAS BEEN TAKEN CLOSED');
+              res.end('POLL HAS BEEN TAKEN');
 
             } else {
               //RENDER POLL CLOSED PAGE/POLL RESULTS
@@ -67,7 +68,6 @@ module.exports = (knex) => {
     let updateChoices = [];
     rankedChoices.forEach((element) => {
       let id = Number(element.id);
-      let rank = element.rank;
       let voterPoints = Number(element.borda);
       knex.select('points').from('choices').where('id', id).then((results) => {
         let currentPoints = Number(results[0].points);
@@ -96,6 +96,8 @@ module.exports = (knex) => {
 
           sendEmail(emailInfo).newVote();
 
+          //res.clearCookie('pollTaken');
+          res.cookie('pollTaken', true ,{path:`/polls/${publicPollKey}`});
           res.end("Rankings Received" );
         });
     });
