@@ -3,10 +3,12 @@
 <%- include('partials/head') %>
   <body>
 <%- include('partials/header') %>
-    <div class="container">
-      <div class="page-header">
-        <h1>Make Up Your Mind</h1>
+    <div class="page-header">
+      <div class="container">
+        <h1>Democratizer</h1>
       </div>
+    </div>
+    <div class="container">
       <h2><%= question %></h2>
       <p>Friends&rsquo; link: <a href="/polls/<%= publicPollKey %>">/polls/<%= publicPollKey %></a></p>
       <p>Your (private) link: <a href="/polls/admin/<%= privatePollKey %>">/polls/admin/<%= privatePollKey %></a></p>
