@@ -1,6 +1,9 @@
 $(function () {
   let optionNum = 3;
 
+  // Focus on the question input initially
+  $('#question').focus();
+
   // Add new option
   $('#new-option-btn').click(function () {
     $newOption = $('<div>').addClass('col-sm-4');
