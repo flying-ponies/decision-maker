@@ -57,13 +57,12 @@ function onSubmitRanking() {
     totalCount++;
     var curRank = index + 1;//Number( $( this ).children( "span" ).text().slice(5) );
     var curID = Number( $( this ).attr( "id" ));
-    rankedChoices.push( [ curID, curRank ] );
+    rankedChoices.push( { id: curID, rank: curRank } );
     console.log( $( this ).text(), "Rank: ", curRank, "ID:", curID );
   });
-  console.log( rankedChoices );
   var bordaCount = totalCount;
   for( var i = 0; i < rankedChoices.length; i++ ) {
-    rankedChoices[i].push( bordaCount );
+    rankedChoices[i]["borda"] = bordaCount;
     bordaCount--;
   }
 

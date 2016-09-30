@@ -45,7 +45,7 @@ module.exports = (knex) => {
       optionTitle.forEach((title, index) => {
         let description = optionDescription[index];
         titleDescriptionKnexPromises.push(
-          knex('choices').insert({ 'poll_id': pollId, 'title': title, 'description': description, 'points': 0 })
+          knex('choices').insert({ 'poll_id': pollId, 'title': title, 'description': description, 'points': 0 }).then()
         );
       });
       return Promise.all(titleDescriptionKnexPromises).then(() => { res.redirect("polls/admin/" + privatePollKey); });
