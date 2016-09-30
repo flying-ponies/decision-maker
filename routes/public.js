@@ -2,8 +2,7 @@
 
 const express = require('express');
 const router  = express.Router();
-const mailgun  = require('mailgun-js')({apiKey: process.env.MG_API_KEY, domain: process.env.MG_DOMAIN});
-const emailTemplates = require('../lib/email_templates')
+const sendEmail = require('../lib/send_email')
 
 module.exports = (knex) => {
 
@@ -34,7 +33,7 @@ module.exports = (knex) => {
               'choices': results[1]
             };
             console.log(templateVars);
-          //RENDER PAGE USING EJS WITH OBJECT
+            //RENDER PAGE USING EJS WITH OBJECT
             res.render('rankpoll', templateVars);
           });
 
@@ -74,20 +73,19 @@ module.exports = (knex) => {
           let email = results[0].email;
           let privatePollKey = results[0].private_key;
 
-          var emailData = emailTemplates(email, privatePollKey, publicPollKey, hostName).newVote;
+          let emailInfo = {
+            'hostName': hostName,
+            'pollerEmail': email,
+            'privatePollKey': privatePollKey,
+            'publicPollKey': publicPollKey
+          };
 
-          mailgun.messages().send(emailData, (err, body) => {
-            if(err) {
-              console.log(err);
-            }
-            console.log(body);
-          });
+          sendEmail(emailInfo).newVote();
 
           res.end("Rankings Received" );
         });
     });
     // AJAX WILL HANDLE PAGE UPDATE
-
   });
 
   return router;
