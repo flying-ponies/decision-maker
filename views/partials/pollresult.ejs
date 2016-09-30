@@ -3,13 +3,43 @@
 <% } else { %>
 <div class="poll-result">
 <% } %>
-  <div class="row">
-    <div class="col-sm-9 info">
-      <h3><%= title %></h3>
-      <p><%= description %></p>
-    </div>
-    <div class="col-sm-3 points">
-      <%= points %> point<% if (points !== 1) { %>s<% }%>
-    </div>
-  </div>
+<% if (totalPoints > 0) { %>
+  <header>
+    <% if (winner) { %>
+    <h2>
+      <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span></small>
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+      <%= rank %>
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+      <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span></small>
+    </h2>
+    <% } else { %>
+    <h2><small><span class="glyphicon glyphicon-star" aria-hidden="true"></span></small> <%= rank %> <small><span class="glyphicon glyphicon-star" aria-hidden="true"></span></small></h2>
+    <% } %>
+  </header>
+<% } %>
+  <section>
+    <div class="row">
+      <div class="col-sm-9 info">
+        <h3><%= title %></h3>
+        <% if (description) { %>
+        <p><%= description %></p>
+        <% } %>
+      </div>
+      <div class="col-sm-3 points">
+        <%= points %> point<% if (points !== 1) { %>s<% }%>
+      </div>
+    </div><!-- /.row -->
+    <% if (totalPoints > 0) { %>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="progress">
+            <% let percentOfPoints = Math.round((points / totalPoints) * 100); %>
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= percentOfPoints %>%;">
+            </div>
+          </div>
+        </div>
+      </div><!-- /.row -->
+    <% } %>
+  </section>
 </div>
