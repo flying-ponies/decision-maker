@@ -8,6 +8,7 @@ module.exports = (knex) => {
   function makeBordaCounts( choices, pollID, cb ){
     var totalNumberOfPoints = choices.length;
     var rankedChoices = [];
+    console.log( "pollID:", pollID );
     knex
       .select( "points" )
       .from( "choices" )
