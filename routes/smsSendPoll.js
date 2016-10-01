@@ -38,6 +38,7 @@ module.exports = (knex) => {
           .from("phone_numbers")
           .where("phone_number", phoneNumber)
           .then((rows) => {
+            console.logs( "***Top Rows***", rows );
             if( rows.length ) { //for obeying the uniqueness of phone_numbers
               return null;
             }
