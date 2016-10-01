@@ -52,6 +52,7 @@ module.exports = (knex) => {
             data: { rankedChoices }
           })
           .done( function( msg ) {
+            res.end("sms success");
           })
           .fail( function(err) {
             console.log( "POST from POST failed; ", err );
