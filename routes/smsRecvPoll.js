@@ -28,7 +28,7 @@ module.exports = (knex) => {
     var phoneNumber = req.body.From;
     phoneNumber = phoneNumber.slice( 2 ); //remove the +1
 
-    var domain = req.rawHeaders.split(",")[1];
+    var domain = (String(req.rawHeaders).split(","))[1];
 
     var path = req.url;
     console.log( "****************************** Req *************************\n", req );
