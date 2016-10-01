@@ -1,11 +1,12 @@
 $color_primary: #34495e;
 $color_secondary: #437c90;
 $color_accent: #F9BF2A;
+$color_bg: #fff;
 
 $color_dropareas: #ccc;
 $color_header: $color_primary;
 $header_height: 150px;
-$font_main: 'Amiko', 'Helvetica Neue', Helvetica, sans-serif;
+$font_main: 'Lato', 'Helvetica Neue', Helvetica, sans-serif;
 $font_headers: 'Bungee', $font_main;
 
 @media (min-width: 1200px) {
@@ -22,6 +23,21 @@ h1, h2, h3, h4, h5, h6 {
   font-family: $font_headers;
 }
 
+footer {
+  border-top: 1px solid $color_primary;
+  padding: 3em 0;
+  margin-top: 3em;
+  background-color: $color_primary;
+  color: $color_secondary;
+  p {
+    margin: 0;
+  }
+}
+
+.sub-heading {
+
+}
+
 .page-header {
   $header_h1_size: 42px;
   padding: ($header_height) - ($header_h1_size*2) 0;
@@ -35,6 +51,12 @@ h1, h2, h3, h4, h5, h6 {
     display: block;
     color: #fff;
     line-height: 0.9em;
+    a {
+      color: #fff;
+      &:hover {
+        color: $color_secondary;
+      }
+    }
     small {
       color: $color_secondary;
       &:hover {
@@ -48,43 +70,111 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .droptrue {
-  /*background-color: $color_dropareas;*/
-  padding: 1em;
+  // height: 50em;
+  position: relative;
+  .list-group-item {
+    &:hover {
+      cursor: -webkit-grab;
+      cursor: -moz-grab;
+      cursor: grab;
+    }
+    &:active {
+      cursor: -webkit-grabbing;
+      cursor: -moz-grabbing;
+      cursor: grabbing;
+    }
+    span {
+      font-family: $font_headers;
+      font-size: 2em;
+    }
+  }
 }
 
 #ranked-options {
-  border: 1px dotted #777;
+  .poll-option {
+    padding: 1em;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15), 0 0 3px rgba(0,0,0,0.15);
+
+    &:hover {
+      cursor: -webkit-grab;
+      cursor: -moz-grab;
+      cursor: grab;
+    }
+    &:active {
+      cursor: -webkit-grabbing;
+      cursor: -moz-grabbing;
+      cursor: grabbing;
+    }
+    span {
+      font-family: $font_headers;
+      font-size: 2em;
+    }
+  }
 }
 
-#unranked-options {
-
-}
-
-.options-container {
-  background-color: $color_dropareas;
-  border-radius: 6px;
-  border: 1px solid #e3e3e3;
-  padding: 1em;
-  h3 {
+.section-container {
+  border: 1px solid $color_dropareas;
+  padding: 1.5em 1.5em 0 1.5em;
+  margin-bottom: 2em;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15), 0 0 3px rgba(0,0,0,0.15);
+  header {
     text-align: center;
+  }
+  &.options {
+    background-color: $color_dropareas;
+    padding-bottom: 1.5em;
   }
 }
 
 .poll-result {
-  border: 1px solid #e3e3e3;
-  padding: 1em;
-  margin-bottom: 1em;
+  border: 1px solid $color_secondary;
+  padding: 0;
+  margin-bottom: 2em;
+  background-color: $color_bg;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 3px rgba(0, 0, 0, 0.2);
 
-  &.winner {
-    background-color: $color_accent;
-    color: white;
+  header {
+    padding: 1em;
+    margin: 0;
+    text-align: center;
+    color: #fff;
+    background-color: $color_secondary;
+
+    small span {
+      color: #fff;
+    }
   }
 
-  .points {
-    font-family: $font_headers;
-    text-align: right;
-    font-size: 200%;
-    padding: 1em 1em 1em 0;
+  .progress-bar {
+    background-color: $color_secondary;
+  }
+
+  section {
+    padding: 1em;
+
+    h3 {
+      margin-top: 0;
+    }
+
+    .points {
+      font-family: $font_headers;
+      text-align: right;
+      font-size: 200%;
+      // padding: 1em 1em 1em 0;
+    }
+  }
+
+  &.winner {
+    border-color: $color_accent;
+    header {
+      background-color: $color_accent;
+    }
+
+    .progress-bar {
+      background-color: $color_accent;
+    }
   }
 }
 
@@ -92,7 +182,36 @@ h1, h2, h3, h4, h5, h6 {
   .poll-result {
     text-align: center;
   }
-  .poll-result .points {
+  .poll-result section .points {
+    padding-right: 0;
     text-align: center;
   }
+}
+
+.well {
+  background-color: $color_secondary;
+  color: #fff;
+  border-radius: 0;
+}
+
+.form-control {
+  border: 2px solid $color_primary;
+  color: $color_primary;
+  &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: lighten($color_primary, 35%);
+  }
+  &::-moz-placeholder { /* Firefox 19+ */
+    color: lighten($color_primary, 35%);
+  }
+  &:-ms-input-placeholder { /* IE 10+ */
+    color: lighten($color_primary, 35%);
+  }
+  &:-moz-placeholder { /* Firefox 18- */
+    color: lighten($color_primary, 35%);
+  }
+}
+
+.btn.btn-default {
+  background-color: $color_primary;
+  color: #fff;
 }
