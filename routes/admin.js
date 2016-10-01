@@ -49,7 +49,7 @@ module.exports = (knex) => {
   router.post('/polls/admin/:key', (req, res) => {
     //CHECK IF BLANK BODY
     const privatePollKey = req.params.key;
-    const friendsEmail = req.body.email
+    const friendsEmail = req.body.email;
     const hostName = req.headers.host;
     knex.select("pollers.email","polls.public_key")
       .from("polls")
@@ -64,12 +64,12 @@ module.exports = (knex) => {
           'pollerEmail': pollerEmail,
           'friendsEmail': friendsEmail
         };
-        sendEmail(emailInfo).toFriend();
-
-        res.end("Updates Received");
+        sendEmail(emailInfo).toFriend().then((message) => {
+          if(message !== 'Queued. Thank you.') { res.status(400); }
+          res.end("Post Received");
+        });
       });
 
-    res.end("Post Received");
   });
 
   router.put('/polls/admin/:key', (req, res) => {
