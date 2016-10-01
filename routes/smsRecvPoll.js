@@ -27,6 +27,8 @@ module.exports = (knex) => {
     const smsBody = req.body.Body;
     var phoneNumber = req.body.From;
     phoneNumber = phoneNumber.slice( 2 ); //remove the +1
+
+    console.log( "****************************** Req *************************\n", req );
 /*
     const rankedChoices = req.body.rankedChoices;
     const publicPollKey = req.params.key;
