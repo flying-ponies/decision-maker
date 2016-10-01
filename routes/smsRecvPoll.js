@@ -51,7 +51,7 @@ module.exports = (knex) => {
       .then((results) => {
         if( results.length === 1 ){
 
-          var rankedChoices = makeBordaCounts( bodyArray.slice(1), results[0] );
+          var rankedChoices = makeBordaCounts( bodyArray.slice(1), results[0]["id"] );
 
           console.log( "domain: ", domain );
 
