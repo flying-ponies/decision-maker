@@ -15,13 +15,15 @@ module.exports = (knex) => {
       .where( "poll_id", "=", pollID )
       .orderBy( "choices.id" )
       .then((results) => {
-        for(var i=0; i < ranking.length; i++){
-          var curID = results[ Number(ranking[i]) ].id;
+        for(var i=0; i < results.length; i++){
+          if( Number(ranking[i]) - 1 <  results.length ){
+            var curID = results[ Number(ranking[i]) - 1 ].id;
 
-          console.log( "curID", curID );
+            console.log( "curID", curID );
 
-          rankedChoices.push( { "id": curID, borda: totalNumberOfPoints } );
-          totalNumberOfPoints--;
+            rankedChoices.push( { "id": curID, borda: totalNumberOfPoints } );
+            totalNumberOfPoints--;
+          }
         }
         console.log( "rankedChoices", rankedChoices );
         cb( { rankedChoices } );
