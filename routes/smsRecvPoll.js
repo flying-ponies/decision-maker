@@ -5,8 +5,8 @@ const request = require( 'request' );
 
 module.exports = (knex) => {
 
-  function makeBordaCounts( choices, pollID, cb ){
-    var totalNumberOfPoints = choices.length;
+  function makeBordaCounts( ranking, pollID, cb ){
+    var totalNumberOfPoints = ranking.length;
     var rankedChoices = [];
     console.log( "pollID:", pollID );
     knex
@@ -15,8 +15,11 @@ module.exports = (knex) => {
       .where( "poll_id", "=", pollID )
       .orderBy( "choices.id" )
       .then((results) => {
-        for(var i=0; i < choices.length; i++){
-          var curID = results[ Number(choices[i]) ];
+        for(var i=0; i < ranking.length; i++){
+          var curID = results[ Number(ranking[i]) ];
+
+          console.log( "curID", curID );
+
           rankedChoices.push( { "id": curID, borda: totalNumberOfPoints } );
           totalNumberOfPoints--;
         }
