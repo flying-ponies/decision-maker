@@ -11,7 +11,7 @@ module.exports = (knex) => {
     knex
       .select( "points" )
       .from( "choices" )
-      .where( "poll_id", "=", "pollID" )
+      .where( "poll_id", "=", pollID )
       .orderBy( "choices.id" )
       .then((results) => {
         for(var i=0; i < choices.length; i++){
@@ -54,7 +54,7 @@ module.exports = (knex) => {
 
         console.log( "domain: ", domain );
 
-        request.post( domain + "/polls/" + results[0].public_key).form( rankedChoices );
+        request.post( "http://" + domain + "/polls/" + results[0].public_key).form( rankedChoices );
 
         /*express.({
           method: "POST",
