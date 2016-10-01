@@ -10,13 +10,13 @@ module.exports = (knex) => {
     var rankedChoices = [];
     console.log( "pollID:", pollID );
     knex
-      .select( "points" )
+      .select( "id" )
       .from( "choices" )
       .where( "poll_id", "=", pollID )
       .orderBy( "choices.id" )
       .then((results) => {
         for(var i=0; i < ranking.length; i++){
-          var curID = results[ Number(ranking[i]) ];
+          var curID = results[ Number(ranking[i]) ].id;
 
           console.log( "curID", curID );
 
@@ -36,7 +36,7 @@ module.exports = (knex) => {
     var domain = (String(req.rawHeaders).split(","))[1];
 
     var path = req.url;
-    console.log( "****************************** Req *************************\n", req );
+    //console.log( "****************************** Req *************************\n", req );
 /*
     const rankedChoices = req.body.rankedChoices;
     const publicPollKey = req.params.key;
