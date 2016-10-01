@@ -54,14 +54,14 @@ module.exports = (knex) => {
               if( rowsB ){
                 knex( "polls_to_phone_numbers" )
                   .insert(
-                    {phone_number_id: rows[0], poll_id: pollID}
+                    {phone_number_id: rowsB[0], poll_id: pollID}
                    ).then((results) =>{ res.end('ADMIN PAGE');})
               }
               else {
                 res.end( 'ADMIN PAGE')
               }
 
-      });
+        });
 
       });
 
