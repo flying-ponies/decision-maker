@@ -28,9 +28,19 @@
 
       <div class="section-container">
         <header>
-        <h3>Results</h3>
+        <h3>
+        <% if (isOpen) { %>
+          Current results
+        <% } else { %>
+          Final results
+        <% } %>
+        </h3>
       <% if (numWinners === 1) { %>
-        <p class="lead">We have a winner!</p>
+        <p class="lead">
+        <% if (!isOpen) { %>
+          You have closed the poll, and We have a winner!
+        <% } %>
+        </p>
       <% } else if (numWinners > 1) { %>
         <p class="lead">It&rsquo;s all tied up!</p>
       <% } else { %>
@@ -48,7 +58,9 @@
       <%# If the poll is open, show the forms for sending the poll. %>
       <% if (isOpen) { %>
       <div class="section-container">
-        <h3>Send the poll</h3>
+        <header>
+          <h3>Send the poll</h3>
+        </header>
         <div class="row">
           <div class="col-sm-6">
             <div class="well">
@@ -83,19 +95,29 @@
         </div><!-- /.row -->
       </div><!-- /.section-container -->
 
-      <p>All the results in?</p>
-      <form class="isOpen" action="/polls/admin/<%= privatePollKey %>" method="post">
-        <input type="hidden" name="_method" value='PUT'>
-        <input type="hidden" name="isOpen" value=''>
-        <button type="submit" class="btn btn-default">Close poll</button>
-      </form>
+      <div class="section-container">
+        <header>
+          <h3>Close the poll</h3>
+        </header>
+        <p>All the results in?</p>
+        <form class="isOpen" action="/polls/admin/<%= privatePollKey %>" method="post">
+          <input type="hidden" name="_method" value='PUT'>
+          <input type="hidden" name="isOpen" value=''>
+          <button type="submit" class="btn btn-default">Close poll</button>
+        </form>
+      </div>
       <% } else { %>
-      <p>Want more feedback?</p>
-      <form class="isOpen" action="/polls/admin/<%= privatePollKey %>" method="post">
-        <input type="hidden" name="_method" value='PUT'>
-        <input type="hidden" name="isOpen" value='true'>
-        <button type="submit" class="btn btn-default">Open poll</button>
-      </form>
+      <div class="section-container">
+        <header>
+          <h3>Open the poll</h3>
+        </header>
+        <p>Want more feedback?</p>
+        <form class="isOpen" action="/polls/admin/<%= privatePollKey %>" method="post">
+          <input type="hidden" name="_method" value='PUT'>
+          <input type="hidden" name="isOpen" value='true'>
+          <button type="submit" class="btn btn-default">Open poll</button>
+        </form>
+      </div>
       <% } %>
     </div><!-- /.container -->
     <%- include('partials/footer') %>

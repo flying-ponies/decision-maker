@@ -14,6 +14,7 @@ module.exports = (knex) => {
       .where("private_key", privatePollKey)
       .then((results) => {
         if (results.length) {
+
           Promise.all([
             knex
               .select("pollers.email","polls.question","polls.is_open","polls.public_key")
@@ -34,14 +35,14 @@ module.exports = (knex) => {
               'isOpen': results[0][0].is_open,
               'choices': results[1]
             };
-            //RENDER PAGE USING EJS WITH OBJECT
             res.render('admin', templateVars);
           });
 
         } else {
+
           res.status(404);
-          //ADD PAGE
-          res.end("PAGE NOT FOUND");
+          res.render("not_found");
+
         }
     });
   });

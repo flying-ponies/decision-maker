@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head') %>
+  <body>
+    <script type="text/javascript" src="/scripts/ranking.js"></script>
+<%- include('partials/header') %>
+    <div class="container">
+      <h2><%= question %></h2>
+      <p class="lead">Your friend at <%= email %> wants to know:<br>
+        <strong><%= question %></strong><br><br>
+        <span class="emphasize">you have taken this poll already!</span><br>
+        Please come back to this page once your friend closes the poll to view the results.</p>
+    </div><!-- /.container -->
+    <%- include('partials/footer') %>
+  </body>
+</html>
