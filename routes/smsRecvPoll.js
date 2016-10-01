@@ -62,20 +62,6 @@ module.exports = (knex) => {
 
             request.post( "http://" + domain + "/polls/" + results[0].public_key).form( rankedChoices );
           });
-
-
-          /*express.({
-            method: "POST",
-            url:  process.env.DB_HOST + ":" + process.env.DB_PORT + "/polls/" +
-              results[0].public_key,
-            data: { rankedChoices }
-          })
-          .done( function( msg ) {
-            res.end("sms success");
-          })
-          .fail( function(err) {
-            console.log( "POST from POST failed; ", err );
-          });*/
         }
         else
         {
