@@ -50,7 +50,7 @@ module.exports = (knex) => {
         } else {
           res.status(404);
           // ADD PAGE HRER
-          res.end("PAGE NOT FOUND");
+          res.render("not_found");
         }
     });
   });
