@@ -52,7 +52,7 @@ module.exports = (knex) => {
 
         var rankedChoices = makeBordaCounts( bodyArray.slice(1), results[0] );
 
-        console.log( "domain: " domain );
+        console.log( "domain: ", domain );
 
         request.post( domain + "/polls/" + results[0].public_key).form( rankedChoices );
 
