@@ -2,6 +2,7 @@ $color_primary: #34495e;
 $color_secondary: #437c90;
 $color_accent: #F9BF2A;
 $color_bg: #fff;
+$color_text_muted: lighten($color_primary, 35%);
 
 $color_dropareas: #ccc;
 $color_header: $color_primary;
@@ -38,9 +39,13 @@ footer {
 
 }
 
+@mixin shadowing() {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
 .page-header {
-  $header_h1_size: 42px;
-  padding: ($header_height) - ($header_h1_size*2) 0;
+  $header_h1_size: 38px;
+  padding: (($header_height - $header_h1_size) * 0.5) 0 0 0;
   margin-top: 0;
   height: $header_height;
   background-color: $color_header;
@@ -50,7 +55,7 @@ footer {
     margin: 0;
     display: block;
     color: #fff;
-    line-height: 0.9em;
+    line-height: 90%;
     a {
       color: #fff;
       &:hover {
@@ -70,8 +75,6 @@ footer {
 }
 
 .droptrue {
-  // height: 50em;
-  position: relative;
   .list-group-item {
     &:hover {
       cursor: -webkit-grab;
@@ -95,7 +98,7 @@ footer {
     padding: 1em;
     background-color: #fff;
     border: 1px solid #ccc;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15), 0 0 3px rgba(0,0,0,0.15);
+    @include shadowing();
 
     &:hover {
       cursor: -webkit-grab;
@@ -118,9 +121,15 @@ footer {
   border: 1px solid $color_dropareas;
   padding: 1.5em 1.5em 0 1.5em;
   margin-bottom: 2em;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15), 0 0 3px rgba(0,0,0,0.15);
+  @include shadowing();
   header {
     text-align: center;
+    margin: 0 0 2em;
+    border-bottom: 1px solid $color_dropareas;
+    padding: 1em 0 2em;
+    h1, h2, h3, h4, h5, h6 {
+      margin: 0;
+    }
   }
   &.options {
     background-color: $color_dropareas;
@@ -133,7 +142,7 @@ footer {
   padding: 0;
   margin-bottom: 2em;
   background-color: $color_bg;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 3px rgba(0, 0, 0, 0.2);
+  @include shadowing();
 
   header {
     padding: 1em;
@@ -162,7 +171,6 @@ footer {
       font-family: $font_headers;
       text-align: right;
       font-size: 200%;
-      // padding: 1em 1em 1em 0;
     }
   }
 
@@ -189,9 +197,19 @@ footer {
 }
 
 .well {
+  border: 1px solid lighten($color_secondary, 10%);
   background-color: $color_secondary;
   color: #fff;
   border-radius: 0;
+  @include shadowing();
+
+  .form-group .help-block {
+    color: #fff;
+  }
+}
+
+form {
+  margin-bottom: 1em;
 }
 
 .form-control {
@@ -214,4 +232,10 @@ footer {
 .btn.btn-default {
   background-color: $color_primary;
   color: #fff;
+  border-color: darken($color_primary, 5%);
+  border-bottom-width: 3px;
+  @include shadowing();
+  &:hover {
+    background-color: darken($color_primary, 5%);
+  }
 }
