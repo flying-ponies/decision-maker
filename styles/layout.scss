@@ -3,21 +3,30 @@ $color_secondary: #437c90;
 $color_accent: #F9BF2A;
 $color_bg: #fff;
 $color_text_muted: lighten($color_primary, 35%);
-
 $color_dropareas: #ccc;
 $color_header: $color_primary;
+
 $header_height: 150px;
+$footer_height: 100px;
 $font_main: 'Lato', 'Helvetica Neue', Helvetica, sans-serif;
 $font_headers: 'Bungee', $font_main;
 
-@media (min-width: 1200px) {
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+@media (min-width: 970px) {
   .container {
-    width: 970px;
+    width: 900px;
   }
 }
 
 body {
   font-family: $font_main;
+  margin-bottom: $footer_height + 20px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -25,18 +34,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: $footer_height;
   border-top: 1px solid $color_primary;
   padding: 3em 0;
-  margin-top: 3em;
   background-color: $color_primary;
   color: $color_secondary;
   p {
     margin: 0;
   }
-}
-
-.sub-heading {
-
 }
 
 @mixin shadowing() {
@@ -74,25 +83,6 @@ footer {
   }
 }
 
-.droptrue {
-  .list-group-item {
-    &:hover {
-      cursor: -webkit-grab;
-      cursor: -moz-grab;
-      cursor: grab;
-    }
-    &:active {
-      cursor: -webkit-grabbing;
-      cursor: -moz-grabbing;
-      cursor: grabbing;
-    }
-    span {
-      font-family: $font_headers;
-      font-size: 2em;
-    }
-  }
-}
-
 #ranked-options {
   .poll-option {
     padding: 1em;
@@ -105,14 +95,21 @@ footer {
       cursor: -moz-grab;
       cursor: grab;
     }
+
     &:active {
       cursor: -webkit-grabbing;
       cursor: -moz-grabbing;
       cursor: grabbing;
     }
+
+    .col-xs-2 {
+      text-align: right;
+    }
+
     span {
       font-family: $font_headers;
       font-size: 2em;
+      color: #FF6C6A;
     }
   }
 }
@@ -122,18 +119,23 @@ footer {
   padding: 1.5em 1.5em 0 1.5em;
   margin-bottom: 2em;
   @include shadowing();
+
   header {
     text-align: center;
     margin: 0 0 2em;
     border-bottom: 1px solid $color_dropareas;
     padding: 1em 0 2em;
-    h1, h2, h3, h4, h5, h6 {
+    h1, h2, h3, h4, h5, h6, p {
       margin: 0;
     }
   }
+
   &.options {
-    background-color: $color_dropareas;
+    background-color: $color_secondary;
     padding-bottom: 1.5em;
+    header {
+      border-color: $color_primary;
+    }
   }
 }
 

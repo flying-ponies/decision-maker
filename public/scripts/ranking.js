@@ -87,7 +87,7 @@ function onSubmitRanking(event) {
     data: { rankedChoices }
   })
   .done( function( msg ) {
-    $('<h1>Thank you for taking the poll!</h1>').replaceAll('div.container div.row');
+    $('<h1>Thank you for taking the poll!</h1>').replaceAll('#ranked-options').css('text-align', 'center');
   })
   .fail( function(err) {
   });
