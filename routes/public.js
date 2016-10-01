@@ -54,7 +54,6 @@ module.exports = (knex) => {
 
     rankedChoices.forEach((element) => {
       let id = Number(element.id);
-      let rank = element.rank;
       let voterPoints = Number(element.borda);
       knex.select('points').from('choices').where('id', id).then((results) => {
         let currentPoints = Number(results[0].points);

@@ -8,6 +8,7 @@ module.exports = (knex) => {
   router.use('/', require('./admin')(knex));
   router.use('/', require('./public')(knex));
   router.use('/', require('./smsSendPoll')(knex));
+  router.use('/', require('./smsRecvPoll')(knex));
 
   return router;
 }
