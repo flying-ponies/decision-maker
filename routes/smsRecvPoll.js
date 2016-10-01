@@ -20,7 +20,7 @@ module.exports = (knex) => {
           totalNumberOfPoints--;
         }
       });//then
-    return rankedChoices;
+    return { rankedChoices };
   }
 
   router.post( '/sms/recvpoll', (req, res) => {
@@ -48,7 +48,7 @@ module.exports = (knex) => {
         var rankedChoices = makeBordaCounts( bodyArray.slice(1), results[0] );
 
         request.post( process.env.DB_HOST + ":" + process.env.DB_PORT + "/polls/" +
-            results[0].public_key).form({ rankedChoices });
+            results[0].public_key).form( rankedChoices );
 
         /*express.({
           method: "POST",
