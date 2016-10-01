@@ -60,6 +60,7 @@ module.exports = (knex) => {
         }
         else
         {
+          console.log( "Results:", results );
           console.log( "Database issue, results of sql query not exactly 1" );
           res.status(404)
           res.send("404 - Page not found")
