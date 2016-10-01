@@ -5,7 +5,7 @@ const request = require( 'request' );
 
 module.exports = (knex) => {
 
-  function makeBordaCounts( choices, pollID ){
+  function makeBordaCounts( choices, pollID, cb ){
     var totalNumberOfPoints = choices.length;
     var rankedChoices = [];
     knex
@@ -19,9 +19,9 @@ module.exports = (knex) => {
           rankedChoices.push( { "id": curID, borda: totalNumberOfPoints } );
           totalNumberOfPoints--;
         }
+        console.log( "rankedChoices", rankedChoices );
+        cb( { rankedChoices } );
       });//then
-    console.log( "rankedChoices", rankedChoices );
-    return { rankedChoices };
   }
 
   router.post( '/sms/recvpoll', (req, res) => {
@@ -51,11 +51,12 @@ module.exports = (knex) => {
       .then((results) => {
         if( results.length === 1 ){
 
-          var rankedChoices = makeBordaCounts( bodyArray.slice(1), results[0]["id"] );
+          makeBordaCounts( bodyArray.slice(1), results[0]["id"], function( rankedChoices) {
+            console.log( "domain: ", domain );
 
-          console.log( "domain: ", domain );
+            request.post( "http://" + domain + "/polls/" + results[0].public_key).form( rankedChoices );
+          });
 
-          request.post( "http://" + domain + "/polls/" + results[0].public_key).form( rankedChoices );
 
           /*express.({
             method: "POST",
