@@ -30,9 +30,13 @@ module.exports = (knex) => {
           }
         }
 
-        smsDialler( phoneNumber, smsPoll );
+        //smsDialler( phoneNumber, smsPoll );
 
-        pollID = results[0]["polls.id"];
+        pollID = results[0]["id"];
+
+        console.log( "pollID: ", pollID );
+        console.log( "results[0]:", results[0] );
+
         knex
           .select("id")
           .from("phone_numbers")
@@ -45,21 +49,22 @@ module.exports = (knex) => {
             else {
               var temp = knex( "phone_numbers" )
                 .insert( {phone_number: phoneNumber} )
-                .returning( "phone_numbers.id" );
+                .returning( "id" );
               console.log( "phone number", temp );
               return temp;
             }
           }).then((rowsB) => {
-              console.log( "returned phone id rows: ", rowsB );
-              if( rowsB ){
-                knex( "polls_to_phone_numbers" )
-                  .insert(
-                    {phone_number_id: rowsB[0], poll_id: pollID}
-                   ).then((results) =>{ res.end('ADMIN PAGE');})
-              }
-              else {
-                res.end( 'ADMIN PAGE')
-              }
+            console.log( "returned phone id rows: ", rowsB );
+            if( rowsB ){
+
+              console.log( "rowsB, pollID", rowsB, pollID );
+
+              knex( "polls_to_phone_numbers" )
+                .insert(
+                  {phone_number_id: rowsB[0], poll_id: pollID}
+                 ).then((results) =>{ res.end('ADMIN PAGE');})
+            }
+            res.end( 'ADMIN PAGE');
 
         });
 
