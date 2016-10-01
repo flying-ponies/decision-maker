@@ -3,52 +3,57 @@
 <%- include('partials/head') %>
   <body>
     <script type="text/javascript" src="/scripts/new-poll.js"></script>
-<%- include('partials/header') %>
+    <%- include('partials/header') %>
     <div class="container">
       <p class="lead">Don&rsquo;t be a dictator. Let everyone decide together.</p>
-      <form action="/polls" method="post">
-        <div class="form-group">
-          <label for="question">What is your question?</label>
-          <input type="text" class="form-control" id="question" name="question" placeholder="What should we do tonight?">
-        </div>
-        <div id="new-poll-options">
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="well">
-                <div class="form-group">
-                  <label for="option-title-1">Title</label>
-                  <input type="text" class="form-control" id="option-title-1" name="option-title" placeholder="Dance">
-                </div>
-                <div class="form-group">
-                  <label for="option-description-1">Description (optional)</label>
-                  <textarea class="form-control" rows="3" id="option-description-1" name="option-description" placeholder="Shake your tailfeathers!"></textarea>
-                </div>
-              </div><!-- /.well -->
-            </div><!-- /.col -->
-            <div class="col-sm-4">
-              <div class="well">
-                <div class="form-group">
-                  <label for="option-title-2">Title</label>
-                  <input type="text" class="form-control" id="option-title-2" name="option-title" placeholder="Attend the Theatre">
-                </div>
-                <div class="form-group">
-                  <label for="option-description-2">Description (optional)</label>
-                  <textarea class="form-control" rows="3" id="option-description-2" name="option-description" placeholder="Watch some thespians pretend"></textarea>
-                </div>
-              </div><!-- /.well -->
-            </div><!-- /.col -->
-          </div><!-- /.row -->
-        </div><!-- /.new-poll-options -->
-        <div class="form-group">
-          <button type="button" id="new-option-btn" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Option</button>
-          <button type="button" id="remove-option-btn" class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Remove Option</button>
-        </div>
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="email@example.com">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
+      <div class="section-container">
+        <header>
+          <h2>Democratise Something</h2>
+        </header>
+        <form action="/polls" method="post">
+          <div class="form-group">
+            <label for="question">What is your question?</label>
+            <input type="text" class="form-control" id="question" name="question" placeholder="What should we do tonight?">
+          </div>
+          <div id="new-poll-options">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="well">
+                  <div class="form-group">
+                    <label for="option-title-1">Title</label>
+                    <input type="text" class="form-control" id="option-title-1" name="option-title" placeholder="Dance">
+                  </div>
+                  <div class="form-group">
+                    <label for="option-description-1">Description (optional)</label>
+                    <textarea class="form-control" rows="3" id="option-description-1" name="option-description" placeholder="Shake your tailfeathers!"></textarea>
+                  </div>
+                </div><!-- /.well -->
+              </div><!-- /.col -->
+              <div class="col-sm-4">
+                <div class="well">
+                  <div class="form-group">
+                    <label for="option-title-2">Title</label>
+                    <input type="text" class="form-control" id="option-title-2" name="option-title" placeholder="Attend the Theatre">
+                  </div>
+                  <div class="form-group">
+                    <label for="option-description-2">Description (optional)</label>
+                    <textarea class="form-control" rows="3" id="option-description-2" name="option-description" placeholder="Watch some thespians pretend"></textarea>
+                  </div>
+                </div><!-- /.well -->
+              </div><!-- /.col -->
+            </div><!-- /.row -->
+          </div><!-- /.new-poll-options -->
+          <div class="form-group">
+            <button type="button" id="new-option-btn" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Option</button>
+            <button type="button" id="remove-option-btn" class="btn btn-default"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Remove Option</button>
+          </div>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="email@example.com">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+      </div><!-- /.section-container -->
     </div><!-- /.container -->
     <%- include('partials/footer') %>
   </body>
