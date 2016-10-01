@@ -43,30 +43,30 @@ module.exports = (knex) => {
     .then((results) => {
       if( results.length === 1 ){
 
-          var rankedChoices = makeBordaCounts( bodyArray.slice(1), results[0] );
+        var rankedChoices = makeBordaCounts( bodyArray.slice(1), results[0] );
 
-          $.ajax({
-            method: "POST",
-            url:  process.env.DB_HOST + ":" + process.env.DB_PORT + "/polls/" +
-              results[0].public_key,
-            data: { rankedChoices }
-          })
-          .done( function( msg ) {
-            res.end("sms success");
-          })
-          .fail( function(err) {
-            console.log( "POST from POST failed; ", err );
-          });
-        }
-        else
-        {
-          console.log( "Results:", results );
-          console.log( "Database issue, results of sql query not exactly 1" );
-          res.status(404)
-          res.send("404 - Page not found")
-        }
-      }) //then(pollIDs)
-    }) //router post
+        $.ajax({
+          method: "POST",
+          url:  process.env.DB_HOST + ":" + process.env.DB_PORT + "/polls/" +
+            results[0].public_key,
+          data: { rankedChoices }
+        })
+        .done( function( msg ) {
+          res.end("sms success");
+        })
+        .fail( function(err) {
+          console.log( "POST from POST failed; ", err );
+        });
+      }
+      else
+      {
+        console.log( "Results:", results );
+        console.log( "Database issue, results of sql query not exactly 1" );
+        res.status(404)
+        res.send("404 - Page not found")
+      }
+    }) //then(pollIDs)
+  }) //router post
   return router;
 }
 

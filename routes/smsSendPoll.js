@@ -44,7 +44,7 @@ module.exports = (knex) => {
           .then((rowsA) => {
             console.log( "***Top Rows***", rowsA );
             if( rowsA.length ) { //for obeying the uniqueness of phone_numbers
-              return null;
+              return [rowsA[0]["id"]];
             }
             else {
               var temp = knex( "phone_numbers" )
