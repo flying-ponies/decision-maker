@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head') %>
+  <body>
+    <script type="text/javascript" src="/scripts/ranking.js"></script>
+<%- include('partials/header') %>
+    <div class="container">
+      <h2><%= question %></h2>
+      <p class="lead">Your friend at <%= email %> wants to know:<br>
+      <strong><%= question %></strong><br>
+      The poll has been closed, you can now view the results!</p>
+      <% let totalPoints = 0; %>
+      <% choices.sort((a, b) => { %>
+        <% return b.points - a.points; %>
+      <% }); %>
+
+      <% let numWinners = 0; %>
+      <% choices.forEach((choice, index) => { %>
+        <% choice.rank = index + 1; %>
+        <% if (index > 0 && choice.points === choices[index-1].points) { %>
+          <% choice.rank = choices[index-1].rank; %>
+        <% } %>
+        <% let winner = choice.points > 0 && choice.points === choices[0].points; %>
+        <% totalPoints += choice.points; %>
+        <% if (winner) numWinners++; %>
+        <% choice.winner = winner; %>
+      <% }); %>
+
+      <div class="section-container">
+        <header>
+        <h3>Results</h3>
+      <% if (numWinners === 1) { %>
+        <p class="lead">We have a winner!</p>
+      <% } else if (numWinners > 1) { %>
+        <p class="lead">It&rsquo;s all tied up!</p>
+      <% } else { %>
+        <p class="lead">The poll has been closed before anyone has voted</p>
+      <% } %>
+        </header>
+      <% choices.forEach((choice, index) => { %>
+        <% choice.mostPoints = choices[0].points; %>
+        <% choice.tied = choice.numWinners > 1; %>
+        <% choice.totalPoints = totalPoints; %>
+        <%- include('partials/pollresult', choice); %>
+      <% }); %>
+      </div><!-- /.section-container -->
+    </div><!-- /.container -->
+    <%- include('partials/footer') %>
+  </body>
+</html>

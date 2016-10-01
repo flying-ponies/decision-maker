@@ -56,10 +56,14 @@ function onUnrankedElementsChanged( event, ui ) {
 }
 
 function registerSubmitRanking() {
-  $( "#submit-ranking" ).click( onSubmitRanking );
+  $( "#submit-ranking" ).on('click', function(event) {
+    onSubmitRanking(event);
+  });
 }
 
-function onSubmitRanking() {
+function onSubmitRanking(event) {
+  event.preventDefault();
+
   var $rankedOptions = $( "#ranked-options" );
   var $children = $rankedOptions.children();
   var totalCount = 0;
@@ -83,7 +87,7 @@ function onSubmitRanking() {
     data: { rankedChoices }
   })
   .done( function( msg ) {
-    window.location.href = window.location.pathname;
+    $('<h1>Thank you for taking the poll!</h1>').replaceAll('div.container div.row');
   })
   .fail( function(err) {
   });

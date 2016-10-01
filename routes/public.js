@@ -30,22 +30,21 @@ module.exports = (knex) => {
               .where("polls.public_key", publicPollKey),
           ]).then((results) => {
             const isOpen = results[0][0].is_open;
+            const templateVars = {
+              'email': results[0][0].email,
+              'question': results[0][0].question,
+              'is_open': isOpen,
+              'choices': results[1]
+            };
+            // console.log(templateVars);
             if(isOpen && !pollTaken) {
-              const templateVars = {
-                'email': results[0][0].email,
-                'question': results[0][0].question,
-                'is_open': isOpen,
-                'choices': results[1]
-              };
-              // console.log(templateVars);
-              // RENDER PAGE USING EJS WITH OBJECT
               res.render('rankpoll', templateVars);
             } else if(isOpen && pollTaken) {
               //POLL HAS BEEN TAKEN/POLL RESULTS
-              res.end('POLL HAS BEEN TAKEN');
+              res.render('poll_taken', templateVars);
             } else {
               // RENDER POLL CLOSED PAGE/POLL RESULTS
-              res.end('POLL IS CLOSED');
+              res.render('poll_closed_public', templateVars);
             }
           });
         } else {

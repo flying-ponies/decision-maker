@@ -28,9 +28,19 @@
 
       <div class="section-container">
         <header>
-        <h3>Results</h3>
+        <h3>
+        <% if (isOpen) { %>
+          Current results
+        <% } else { %>
+          Final results
+        <% } %>
+        </h3>
       <% if (numWinners === 1) { %>
-        <p class="lead">We have a winner!</p>
+        <p class="lead">
+        <% if (!isOpen) { %>
+          You have closed the poll, and We have a winner!
+        <% } %>
+        </p>
       <% } else if (numWinners > 1) { %>
         <p class="lead">It&rsquo;s all tied up!</p>
       <% } else { %>
