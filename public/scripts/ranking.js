@@ -1,9 +1,20 @@
 $( document ).ready( function (){
-  registerDraggableElements();
+  // registerDraggableElements();
   registerRankingElementChange();
-  registerUnrankedElementChange();
+  // registerUnrankedElementChange();
   registerSubmitRanking();
+
+  setOptionsContainerHeight();
+
+  $(window).resize(setOptionsContainerHeight);
+
 });
+
+function setOptionsContainerHeight() {
+  var container = $('.section-container.options');
+  container.css('height', 'auto');
+  container.css('height', (container.css('height')));
+}
 
 function registerDraggableElements() {
   $( "ul.droptrue" ).sortable({
@@ -20,7 +31,7 @@ function registerRankingElementChange() {
 function onRankedElementsChanged( event, ui ) {
   var $children = $( this ).children();
   $children.each( function( index ) {
-    $( this ).children( "span" ).text( "Rank: " + String(index+1) );
+    $( this ).find( "span" ).text( String(index+1) );
   });
 }
 
@@ -38,7 +49,7 @@ function onUnrankedElementsChanged( event, ui ) {
   }
   else {
     $children.each( function( index ) {
-      $( this ).children( "span" ).text( "" );
+      $( this ).find( "span" ).text( "" );
     });
     $( "#submit-ranking" ).hide();
   }
@@ -55,7 +66,7 @@ function onSubmitRanking() {
   var rankedChoices = [];
   $children.each( function( index ) {
     totalCount++;
-    var curRank = index + 1;//Number( $( this ).children( "span" ).text().slice(5) );
+    var curRank = index + 1;//Number( $( this ).find( "span" ).text().slice(5) );
     var curID = Number( $( this ).attr( "id" ));
     rankedChoices.push( { id: curID, rank: curRank } );
     console.log( $( this ).text(), "Rank: ", curRank, "ID:", curID );

@@ -26,6 +26,7 @@
       <% }); %>
 
       <div class="section-container">
+        <header>
         <h3>Results</h3>
       <% if (numWinners === 1) { %>
         <p class="lead">We have a winner!</p>
@@ -34,7 +35,9 @@
       <% } else { %>
         <p class="lead">No votes yet. Support democracy by <a href="#sendSMS">sending the poll</a> to your friends.</p>
       <% } %>
+        </header>
       <% choices.forEach((choice, index) => { %>
+        <% choice.mostPoints = choices[0].points; %>
         <% choice.tied = choice.numWinners > 1; %>
         <% choice.totalPoints = totalPoints; %>
         <%- include('partials/pollresult', choice); %>
@@ -92,7 +95,6 @@
       </form>
       <% } %>
     </div><!-- /.container -->
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <%- include('partials/footer') %>
   </body>
 </html>
