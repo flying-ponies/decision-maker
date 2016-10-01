@@ -1,7 +1,7 @@
 const express = require('express');
 const router  = express.Router();
 const smsDialler = require('./util/smsDialler');
-
+const request = require( 'request' );
 
 module.exports = (knex) => {
 
@@ -47,7 +47,10 @@ module.exports = (knex) => {
 
         var rankedChoices = makeBordaCounts( bodyArray.slice(1), results[0] );
 
-        $.ajax({
+        request.post( process.env.DB_HOST + ":" + process.env.DB_PORT + "/polls/" +
+            results[0].public_key).form({ rankedChoices });
+
+        /*express.({
           method: "POST",
           url:  process.env.DB_HOST + ":" + process.env.DB_PORT + "/polls/" +
             results[0].public_key,
@@ -58,7 +61,7 @@ module.exports = (knex) => {
         })
         .fail( function(err) {
           console.log( "POST from POST failed; ", err );
-        });
+        });*/
       }
       else
       {
