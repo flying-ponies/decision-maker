@@ -2,25 +2,27 @@ const express = require('express');
 const router  = express.Router();
 const smsDialler = require('./util/smsDialler');
 
-function makeBordaCounts( choices, pollID ){
-  var totalNumberOfPoints = choices.length;
-  var rankedChoices = [];
-  knex
-    .select( "points" )
-    .from( "choices" )
-    .where( "poll_id", "=", "pollID" )
-    .orderBy( "choices.id" )
-    .then((results) => {
-      for(var i=0; i < choices.length; i++){
-        var curID = results[ Number(choices[i]) ];
-        rankedChoices.push( { id: curID, borda: totalNumberOfPoints } );
-        totalNumberOfPoints--;
-      }
-    });//then
-  return rankedChoices;
-}
 
 module.exports = (knex) => {
+
+  function makeBordaCounts( choices, pollID ){
+    var totalNumberOfPoints = choices.length;
+    var rankedChoices = [];
+    knex
+      .select( "points" )
+      .from( "choices" )
+      .where( "poll_id", "=", "pollID" )
+      .orderBy( "choices.id" )
+      .then((results) => {
+        for(var i=0; i < choices.length; i++){
+          var curID = results[ Number(choices[i]) ];
+          rankedChoices.push( { id: curID, borda: totalNumberOfPoints } );
+          totalNumberOfPoints--;
+        }
+      });//then
+    return rankedChoices;
+  }
+
   router.post( '/sms/recvpoll', (req, res) => {
     const smsBody = req.body.Body;
     var phoneNumber = req.body.From;
