@@ -34,8 +34,9 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="progress">
-            <% let percentOfPoints = Math.round((points / totalPoints) * 100); %>
+            <% let percentOfPoints = Math.round((points / mostPoints) * 100); %>
             <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= percentOfPoints %>%;">
+              <%= points %> point<% if (points !== 1) { %>s<% }%>
             </div>
           </div>
         </div>

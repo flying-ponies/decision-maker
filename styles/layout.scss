@@ -70,24 +70,47 @@ footer {
 }
 
 .droptrue {
-  padding: 1em;
+  // height: 50em;
+  position: relative;
+  .list-group-item {
+    &:hover {
+      cursor: -webkit-grab;
+      cursor: -moz-grab;
+      cursor: grab;
+    }
+    &:active {
+      cursor: -webkit-grabbing;
+      cursor: -moz-grabbing;
+      cursor: grabbing;
+    }
+    span {
+      font-family: $font_headers;
+      font-size: 2em;
+    }
+  }
 }
 
 #ranked-options {
-  border: 1px dotted #777;
-}
+  .poll-option {
+    padding: 1em;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15), 0 0 3px rgba(0,0,0,0.15);
 
-#unranked-options {
-
-}
-
-.options-container {
-  background-color: $color_dropareas;
-  border-radius: 6px;
-  border: 1px solid #e3e3e3;
-  padding: 1em;
-  h3 {
-    text-align: center;
+    &:hover {
+      cursor: -webkit-grab;
+      cursor: -moz-grab;
+      cursor: grab;
+    }
+    &:active {
+      cursor: -webkit-grabbing;
+      cursor: -moz-grabbing;
+      cursor: grabbing;
+    }
+    span {
+      font-family: $font_headers;
+      font-size: 2em;
+    }
   }
 }
 
@@ -96,6 +119,13 @@ footer {
   padding: 1.5em 1.5em 0 1.5em;
   margin-bottom: 2em;
   box-shadow: 0 2px 4px rgba(0,0,0,0.15), 0 0 3px rgba(0,0,0,0.15);
+  header {
+    text-align: center;
+  }
+  &.options {
+    background-color: $color_dropareas;
+    padding-bottom: 1.5em;
+  }
 }
 
 .poll-result {
