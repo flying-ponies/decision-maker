@@ -22,7 +22,6 @@ function makeBordaCounts( choices, pollID ){
 
 module.exports = (knex) => {
   router.post( '/sms/recvpoll', (req, res) => {
-    console.log( "***REQ***", req.body );
     const smsBody = req.body.Body;
     var phoneNumber = req.body.From;
     phoneNumber = phoneNumber.slice( 2 ); //remove the +1
@@ -33,7 +32,7 @@ module.exports = (knex) => {
 */
   var processedBody = smsBody.replace(/\,/g, ' ').replace(/\s+/g, ' ');
   var bodyArray = processedBody.split(' ');
-
+  console.log( "***Body Array***:", bodyArray );
   knex
     .select( "polls.id", "public_key" )
     .from( "phone_numbers" )
