@@ -30,7 +30,7 @@ module.exports = (knex) => {
           }
         }
 
-        //smsDialler( phoneNumber, smsPoll );
+        smsDialler( phoneNumber, smsPoll );
 
         pollID = results[0]["id"];
 
