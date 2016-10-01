@@ -23,8 +23,8 @@ function makeBordaCounts( choices, pollID ){
 module.exports = (knex) => {
   router.post( '/sms/recvpoll', (req, res) => {
     console.log( "***REQ***", req.body );
-    const smsBody = req.body;
-    var phoneNumber = req.body.from;
+    const smsBody = req.body.Body;
+    var phoneNumber = req.body.From;
     phoneNumber = phoneNumber.slice( 2 ); //remove the +1
 /*
     const rankedChoices = req.body.rankedChoices;
@@ -35,11 +35,11 @@ module.exports = (knex) => {
   var bodyArray = processedBody.split(' ');
 
   knex
-    .select( "poll.id", "public_key" )
+    .select( "polls.id", "public_key" )
     .from( "phone_numbers" )
     .join( "polls_to_phone_numbers", "phone_number_id", "=", "phone_numbers.id" )
     .where( "phone_number", Number( phoneNumber ) )
-    .join( "polls", "poll.id", "=", "poll_id" )
+    .join( "polls", "polls.id", "=", "poll_id" )
     .where( "public_key", "like", bodyArray[0]+"%" )
     .then((results) => {
       if( results.length === 1 ){
@@ -62,6 +62,8 @@ module.exports = (knex) => {
         else
         {
           console.log( "Database issue, results of sql query not exactly 1" );
+          res.status(404)
+          res.send("404 - Page not found")
         }
       }) //then(pollIDs)
     }) //router post
