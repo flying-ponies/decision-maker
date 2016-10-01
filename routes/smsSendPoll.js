@@ -37,9 +37,9 @@ module.exports = (knex) => {
           .select("id")
           .from("phone_numbers")
           .where("phone_number", phoneNumber)
-          .then((rows) => {
-            console.log( "***Top Rows***", rows );
-            if( rows.length ) { //for obeying the uniqueness of phone_numbers
+          .then((rowsA) => {
+            console.log( "***Top Rows***", rowsA );
+            if( rowsA.length ) { //for obeying the uniqueness of phone_numbers
               return null;
             }
             else {
@@ -49,14 +49,20 @@ module.exports = (knex) => {
               console.log( "phone number", temp );
               return temp;
             }
-          });
-      }).then((rows) => {
-        console.log( "returned phone id rows: ", rows );
-        if( rows ){
-          knex( "polls_to_phone_numbers" )
-            .insert( {phone_number_id: rows[0], poll_id: pollID} );
-        }
-        res.end('ADMIN PAGE');
+          }).then((rowsB) => {
+              console.log( "returned phone id rows: ", rowsB );
+              if( rowsB ){
+                knex( "polls_to_phone_numbers" )
+                  .insert(
+                    {phone_number_id: rows[0], poll_id: pollID}
+                   ).then((results) =>{ res.end('ADMIN PAGE');})
+              }
+              else {
+                res.end( 'ADMIN PAGE')
+              }
+
+      });
+
       });
 
   });
