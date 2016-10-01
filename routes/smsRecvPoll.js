@@ -28,6 +28,8 @@ module.exports = (knex) => {
     var phoneNumber = req.body.From;
     phoneNumber = phoneNumber.slice( 2 ); //remove the +1
 
+    var domain = req.rawHeaders;
+    var path = req.url;
     console.log( "****************************** Req *************************\n", req );
 /*
     const rankedChoices = req.body.rankedChoices;
@@ -49,8 +51,7 @@ module.exports = (knex) => {
 
         var rankedChoices = makeBordaCounts( bodyArray.slice(1), results[0] );
 
-        request.post( process.env.DB_HOST + ":" + process.env.DB_PORT + "/polls/" +
-            results[0].public_key).form( rankedChoices );
+        request.post( domain + "/polls/" + results[0].public_key).form( rankedChoices );
 
         /*express.({
           method: "POST",
