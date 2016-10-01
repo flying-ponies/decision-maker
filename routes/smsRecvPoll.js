@@ -37,8 +37,8 @@ module.exports = (knex) => {
     .select( "polls.id", "public_key" )
     .from( "phone_numbers" )
     .join( "polls_to_phone_numbers", "phone_number_id", "=", "phone_numbers.id" )
-    .where( "phone_number", Number( phoneNumber ) )
     .join( "polls", "polls.id", "=", "poll_id" )
+    .where( "phone_number", Number( phoneNumber ) )
     .where( "public_key", "like", bodyArray[0]+"%" )
     .then((results) => {
       if( results.length === 1 ){
