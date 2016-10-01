@@ -2,6 +2,7 @@ $color_primary: #34495e;
 $color_secondary: #437c90;
 $color_accent: #F9BF2A;
 $color_bg: #fff;
+$color_text_muted: lighten($color_primary, 35%);
 
 $color_dropareas: #ccc;
 $color_header: $color_primary;
@@ -70,8 +71,6 @@ footer {
 }
 
 .droptrue {
-  // height: 50em;
-  position: relative;
   .list-group-item {
     &:hover {
       cursor: -webkit-grab;
@@ -162,7 +161,6 @@ footer {
       font-family: $font_headers;
       text-align: right;
       font-size: 200%;
-      // padding: 1em 1em 1em 0;
     }
   }
 
@@ -192,6 +190,10 @@ footer {
   background-color: $color_secondary;
   color: #fff;
   border-radius: 0;
+
+  .form-group .help-block {
+    color: #fff;
+  }
 }
 
 .form-control {
