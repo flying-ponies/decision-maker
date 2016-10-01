@@ -69,7 +69,6 @@ module.exports = (knex) => {
         res.end("Updates Received");
       });
 
-    //OPEN AND CLOSES POLL
     res.end("Post Received");
   });
 
