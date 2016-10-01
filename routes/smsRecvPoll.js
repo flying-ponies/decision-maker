@@ -22,9 +22,9 @@ function makeBordaCounts( choices, pollID ){
 
 module.exports = (knex) => {
   router.post( '/sms/recvpoll', (req, res) => {
-    console.log( "***REQ***", req );
-    const smsBody = req.Body;
-    var phoneNumber = req.From;
+    console.log( "***REQ***", req.body );
+    const smsBody = req.body;
+    var phoneNumber = req.body.from;
     phoneNumber = phoneNumber.slice( 2 ); //remove the +1
 /*
     const rankedChoices = req.body.rankedChoices;
