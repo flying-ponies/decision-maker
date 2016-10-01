@@ -16,10 +16,11 @@ module.exports = (knex) => {
       .then((results) => {
         for(var i=0; i < choices.length; i++){
           var curID = results[ Number(choices[i]) ];
-          rankedChoices.push( { id: curID, borda: totalNumberOfPoints } );
+          rankedChoices.push( { "id": curID, borda: totalNumberOfPoints } );
           totalNumberOfPoints--;
         }
       });//then
+    console.log( "rankedChoices", rankedChoices );
     return { rankedChoices };
   }
 
@@ -37,47 +38,47 @@ module.exports = (knex) => {
     const publicPollKey = req.params.key;
     //const hostName = req.headers.host;
 */
-  var processedBody = smsBody.replace(/\,/g, ' ').replace(/\s+/g, ' ');
-  var bodyArray = processedBody.split(' ');
-  console.log( "***Body Array***:", bodyArray );
-  knex
-    .select( "polls.id", "public_key" )
-    .from( "phone_numbers" )
-    .join( "polls_to_phone_numbers", "phone_number_id", "=", "phone_numbers.id" )
-    .join( "polls", "polls.id", "=", "poll_id" )
-    .where( "phone_number", Number( phoneNumber ) )
-    .where( "public_key", "like", bodyArray[0]+"%" )
-    .then((results) => {
-      if( results.length === 1 ){
+    var processedBody = smsBody.replace(/\,/g, ' ').replace(/\s+/g, ' ');
+    var bodyArray = processedBody.split(' ');
+    console.log( "***Body Array***:", bodyArray );
+    knex
+      .select( "polls.id", "public_key" )
+      .from( "phone_numbers" )
+      .join( "polls_to_phone_numbers", "phone_number_id", "=", "phone_numbers.id" )
+      .join( "polls", "polls.id", "=", "poll_id" )
+      .where( "phone_number", Number( phoneNumber ) )
+      .where( "public_key", "like", bodyArray[0]+"%" )
+      .then((results) => {
+        if( results.length === 1 ){
 
-        var rankedChoices = makeBordaCounts( bodyArray.slice(1), results[0] );
+          var rankedChoices = makeBordaCounts( bodyArray.slice(1), results[0] );
 
-        console.log( "domain: ", domain );
+          console.log( "domain: ", domain );
 
-        request.post( "http://" + domain + "/polls/" + results[0].public_key).form( rankedChoices );
+          request.post( "http://" + domain + "/polls/" + results[0].public_key).form( rankedChoices );
 
-        /*express.({
-          method: "POST",
-          url:  process.env.DB_HOST + ":" + process.env.DB_PORT + "/polls/" +
-            results[0].public_key,
-          data: { rankedChoices }
-        })
-        .done( function( msg ) {
-          res.end("sms success");
-        })
-        .fail( function(err) {
-          console.log( "POST from POST failed; ", err );
-        });*/
-      }
-      else
-      {
-        console.log( "Results:", results );
-        console.log( "Database issue, results of sql query not exactly 1" );
-        res.status(404)
-        res.send("404 - Page not found")
-      }
-    }) //then(pollIDs)
-  }) //router post
+          /*express.({
+            method: "POST",
+            url:  process.env.DB_HOST + ":" + process.env.DB_PORT + "/polls/" +
+              results[0].public_key,
+            data: { rankedChoices }
+          })
+          .done( function( msg ) {
+            res.end("sms success");
+          })
+          .fail( function(err) {
+            console.log( "POST from POST failed; ", err );
+          });*/
+        }
+        else
+        {
+          console.log( "Results:", results );
+          console.log( "Database issue, results of sql query not exactly 1" );
+          res.status(404)
+          res.send("404 - Page not found")
+        }
+      }) //then(pollIDs)
+}) //router post
   return router;
 }
 
