@@ -42,12 +42,15 @@ module.exports = (knex) => {
               return null;
             }
             else {
-              return knex( "phone_numbers" )
+              var temp = knex( "phone_numbers" )
                 .insert( {phone_number: phoneNumber} )
                 .returning( "phone_numbers.id" );
+              console.log( "phone number", temp );
+              return temp;
             }
           });
       }).then((rows) => {
+        console.log( "returned phone id rows: ", rows );
         if( rows ){
           knex( "polls_to_phone_numbers" )
             .insert( {phone_number_id: rows[0], poll_id: pollID} );
