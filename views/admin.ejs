@@ -3,7 +3,7 @@
 <%- include('partials/head') %>
   <body>
     <script type="text/javascript" src="/scripts/admin-page.js"></script>
-<%- include('partials/header') %>
+    <%- include('partials/header') %>
     <div class="container">
       <h2><%= question %></h2>
       <p>Friends&rsquo; link: <a href="/polls/<%= publicPollKey %>">democratiser.herokuapp.com/polls/<%= publicPollKey %></a></p>
@@ -35,14 +35,19 @@
           Final results
         <% } %>
         </h3>
+
       <% if (numWinners === 1) { %>
         <p class="lead">
         <% if (!isOpen) { %>
-          You have closed the poll, and We have a winner!
+          You have closed the poll, and we have a winner!
         <% } %>
         </p>
       <% } else if (numWinners > 1) { %>
         <p class="lead">It&rsquo;s all tied up!</p>
+      <% } %>
+
+      <% if (totalVotes > 0) { %>
+        <h4>Total votes: <%= totalVotes %></h4>
       <% } else { %>
         <p class="lead">No votes yet. Support democracy by <a href="#sendSMS">sending the poll</a> to your friends.</p>
       <% } %>
