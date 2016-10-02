@@ -9,9 +9,9 @@ module.exports = (knex) => {
     var cleanArray = [];
     var objNumCounts = {};
 
-    for( int i=0; i<dirtyArray.length; i++ ){
+    for( var i=0; i<dirtyArray.length; i++ ){
       var numberFromString = Number( dirtyArray[i] );
-      if( isNaN( numberFromString ){
+      if( isNaN( numberFromString ) ){
         continue; //silently ignore non-numeric garbage
       }
       cleanArray.push( numberFromString );
@@ -60,7 +60,7 @@ module.exports = (knex) => {
             totalNumberOfPoints--;
           }
           else {
-            templateVars = { success: false, errorMessage: "Poll expected choice to be from 1 to" + (results.length + 1) " received " + ranking.length };
+            templateVars = { success: false, errorMessage: "Poll expected choice to be from 1 to " + (results.length + 1) + " received " + ranking.length };
             res.render('twiml/rankPollResponse', templateVars);
 
             return null;
