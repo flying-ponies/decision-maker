@@ -18,6 +18,7 @@ module.exports = (knex) => {
       .from( "polls" )
       .join( "choices", "polls.id", "choices.poll_id" )
       .where( "private_key", privateKey )
+      .orderBy( "choices.id" )
       .then((results) => {
         if (results.length) {
           smsPoll += results[0].question;
