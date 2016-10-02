@@ -5,7 +5,7 @@ const request = require( 'request' );
 
 module.exports = (knex) => {
 
-  function sanitizeData( dirtyArray ){
+  function sanitizeData( dirtyArray, res ){
     var cleanArray = [];
     var objNumCounts = {};
 
@@ -31,7 +31,7 @@ module.exports = (knex) => {
     return cleanArray;
   }
 
-  function makeBordaCounts( ranking, pollID, cb ){
+  function makeBordaCounts( ranking, pollID, res, cb ){
     var totalNumberOfPoints = ranking.length;
     var rankedChoices = [];
     var templateVars = {};
@@ -89,7 +89,7 @@ module.exports = (knex) => {
     var bodyArray = processedBody.split(' ');
     var pubkeyFragment = bodyArray[0];
 
-    var rankings = sanitizeData( bodyArray.slice(1) );
+    var rankings = sanitizeData( bodyArray.slice(1), res );
     if( rankings === null ){
       //Fatal error, abort!
       return router;
@@ -106,7 +106,7 @@ module.exports = (knex) => {
       .then((results) => {
         if( results.length === 1 ){
 
-          makeBordaCounts( rankings, results[0]["id"], function( rankedChoices ) {
+          makeBordaCounts( rankings, results[0]["id"], res, function( rankedChoices ) {
             if( rankedChoices !== null ){
               var templateVars = { success: true, errorMessage: "" };
               res.render('twiml/rankPollResponse', templateVars);
