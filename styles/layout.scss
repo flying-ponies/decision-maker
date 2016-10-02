@@ -197,9 +197,21 @@ span.emphasize {
   .poll-result {
     text-align: center;
   }
+
   .poll-result section .points {
     padding-right: 0;
     text-align: center;
+  }
+
+  .page-header {
+    $header_h1_size: 26px;
+    padding: (($header_height - $header_h1_size) * 0.5) 0 0 0;
+    height: $header_height;
+
+    h1 {
+      height: $header_h1_size;
+      font-size: $header_h1_size;
+    }
   }
 }
 
