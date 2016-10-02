@@ -32,7 +32,11 @@ module.exports = (knex) => {
 
         smsDialler( phoneNumber, smsPoll );
 
-        pollID = results[0]["polls.id"];
+        pollID = results[0]["id"];
+
+        console.log( "pollID: ", pollID );
+        console.log( "results[0]:", results[0] );
+
         knex
           .select("id")
           .from("phone_numbers")
@@ -40,26 +44,38 @@ module.exports = (knex) => {
           .then((rowsA) => {
             console.log( "***Top Rows***", rowsA );
             if( rowsA.length ) { //for obeying the uniqueness of phone_numbers
-              return null;
+              return [rowsA[0]["id"]];
             }
             else {
               var temp = knex( "phone_numbers" )
                 .insert( {phone_number: phoneNumber} )
-                .returning( "phone_numbers.id" );
+                .returning( "id" );
               console.log( "phone number", temp );
               return temp;
             }
           }).then((rowsB) => {
-              console.log( "returned phone id rows: ", rowsB );
-              if( rowsB ){
-                knex( "polls_to_phone_numbers" )
-                  .insert(
-                    {phone_number_id: rowsB[0], poll_id: pollID}
-                   ).then((results) =>{ res.end('ADMIN PAGE');})
-              }
-              else {
-                res.end( 'ADMIN PAGE')
-              }
+            console.log( "returned phone id rows: ", rowsB );
+            if( rowsB ){
+
+              console.log( "rowsB, pollID", rowsB, pollID );
+
+              knex
+                .select( "phone_number_id", "poll_id" )
+                .from( "polls_to_phone_numbers" )
+                .where( "phone_number_id", rowsB[0] )
+                .where( "poll_id", pollID )
+                .then( (bridge_results) =>{
+                  if( bridge_results.length === 0 ){
+                    knex( "polls_to_phone_numbers" )
+                      .insert(
+                        {phone_number_id: rowsB[0], poll_id: pollID}
+                       ).then((results) =>{ res.end('ADMIN PAGE');})
+                  }
+
+                });
+
+            }
+            res.end( 'ADMIN PAGE');
 
         });
 

@@ -1,49 +1,72 @@
-$( document ).ready( function (){
+$( document ).ready( function () {
 
-  var emailFriendForm = $('form#sendEmail');
-  emailFriendForm.on('submit', function(event) {
+  $('form#sendEmail').on('submit', function(event) {
     event.preventDefault();
     var form = $(this);
-    var textElement = emailFriendForm.parent().find('p')
-    var that = this;
+    var textElement = form.parent().find('p');
     $('div.well p').text("");
     $.ajax({
       url: '/polls/admin/' + form.find('input[name="private_key"]').val(),
       method: 'POST',
       data: form.serialize(),
       success: function () {
-        console.log('Success');
         textElement.text("Email sent");
-        that.reset();
+        form.get(0).reset();
       },
       error: function() {
-        console.log('Failed');
         textElement.text("Failed to send email");
       }
     });
   });
 
-    var smsForm = $('form#sendSMS');
-  smsForm.on('submit', function(event) {
+  $('form#sendSMS').on('submit', function(event) {
     event.preventDefault();
     var form = $(this);
-    var textElement = smsForm.parent().find('p')
-    var that = this;
+    var phoneNumber = formatPhoneNumber($('#phone-number').val());
+    var textElement = form.parent().find('p');
+    if (!checkPhoneNumber(phoneNumber)) {
+      textElement.text("Not a valid phone number");
+      return;
+    }
+
+    $('#phone-number').val(phoneNumber);
+
     $('div.well p').text("");
     $.ajax({
       url: '/sms/sendpoll',
       method: 'POST',
       data: form.serialize(),
       success: function () {
-        console.log('Success');
         textElement.text("SMS sent");
-        that.reset();
+        form.get(0).reset();
       },
       error: function() {
-        console.log('Failed');
         textElement.text("Failed to send SMS");
       }
     });
   });
-
 });
+
+function formatPhoneNumber(input) {
+  var formattedInput = input.toString();
+  formattedInput = formattedInput.replace(/\D/g, '');
+  if (formattedInput.length === 11 && formattedInput[0] === '1') {
+    formattedInput = formattedInput.slice(1);
+  }
+  return formattedInput;
+}
+
+function checkPhoneNumber(phoneNumber) {
+  if (phoneNumber.length === 10 && !/\D/g.test(phoneNumber)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+
+
+
+
+
