@@ -114,7 +114,6 @@ span.emphasize {
     span {
       font-family: $font_headers;
       font-size: 2em;
-      color: #FF6C6A;
     }
   }
 }
@@ -216,6 +215,7 @@ span.emphasize {
 }
 
 .well {
+  padding: 1em 1em 0 1em;
   border: 1px solid lighten($color_secondary, 10%);
   background-color: $color_secondary;
   color: #fff;
@@ -228,7 +228,7 @@ span.emphasize {
 }
 
 form {
-  margin-bottom: 1em;
+  margin-bottom: 2em;
 }
 
 .form-control {
