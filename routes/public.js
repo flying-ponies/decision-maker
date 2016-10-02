@@ -109,7 +109,6 @@ module.exports = (knex) => {
               .where('public_key', publicPollKey);
           })
           .then(() => {
-            console.log(updateChoices);
             return knex
               .select("pollers.email","polls.private_key")
               .from('polls')

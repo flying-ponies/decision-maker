@@ -36,7 +36,6 @@ module.exports = (knex) => {
               'isOpen': results[0][0].is_open,
               'choices': results[1]
             };
-            console.log(templateVars);
             res.render('admin', templateVars);
           });
 
