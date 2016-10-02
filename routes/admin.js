@@ -17,7 +17,7 @@ module.exports = (knex) => {
 
           Promise.all([
             knex
-              .select("pollers.email","polls.question","polls.is_open","polls.public_key")
+              .select("pollers.email","polls.question","polls.is_open","polls.public_key", "polls.total_votes")
               .from("polls")
               .innerJoin("pollers","polls.poller_id","pollers.id")
               .where("polls.private_key", privatePollKey),
@@ -32,9 +32,11 @@ module.exports = (knex) => {
               'publicPollKey': results[0][0].public_key,
               'email': results[0][0].email,
               'question': results[0][0].question,
+              'totalVotes': results[0][0].total_votes,
               'isOpen': results[0][0].is_open,
               'choices': results[1]
             };
+            console.log(templateVars);
             res.render('admin', templateVars);
           });
 

@@ -71,8 +71,8 @@ module.exports = (knex) => {
     knex.select('is_open')
       .from('polls')
       .where('public_key', publicPollKey)
-      .then((results) => {
-        let isOpen = results[0].is_open;
+      .then((resultsA) => {
+        let isOpen = resultsA[0].is_open;
         // CAN'T VOTE IF POLL IS CLOSED
         if (!isOpen) {
           return res.send("{'error': 'poll is closed'}\n");
@@ -84,8 +84,8 @@ module.exports = (knex) => {
             knex.select('points')
               .from('choices')
               .where('id', id)
-              .then((results) => {
-                let currentPoints = Number(results[0].points);
+              .then((resultsB) => {
+                let currentPoints = Number(resultsB[0].points);
                 let resultPoints = currentPoints + voterPoints;
                 updateChoices.push(
                   knex('choices')
@@ -95,7 +95,20 @@ module.exports = (knex) => {
                 );
             });
           });
-          Promise.all(updateChoices).then(() => {
+          Promise.all(updateChoices)
+          .then(() => {
+            return knex
+              .select('total_votes')
+              .from('polls')
+              .where('public_key', publicPollKey);
+          })
+          .then((resultC) => {
+            let currentVotes = resultC[0].total_votes;
+            return knex('polls')
+              .update({'total_votes': currentVotes + 1})
+              .where('public_key', publicPollKey);
+          })
+          .then(() => {
             console.log(updateChoices);
             return knex
               .select("pollers.email","polls.private_key")
