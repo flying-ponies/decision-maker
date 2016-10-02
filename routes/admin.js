@@ -48,37 +48,56 @@ module.exports = (knex) => {
   });
 
   router.post('/polls/admin/:key', (req, res) => {
-    //CHECK IF BLANK BODY
+    // CHECK IF BLANK IS BODY
+    if (!req.body.email) {
+      res.status(400);
+      return res.send("{'error': 'invalid request'}\n");
+    }
+
+    // GETS INFO FROM DB AND SENDS EMAIL TO FRIEND
     const privatePollKey = req.params.key;
     const friendsEmail = req.body.email;
     const hostName = req.headers.host;
+    let emailInfo;
     knex.select("pollers.email","polls.public_key")
       .from("polls")
       .innerJoin("pollers","polls.poller_id","pollers.id")
-      .where("polls.private_key", privatePollKey).then((results) => {
+      .where("polls.private_key", privatePollKey)
+      .then((results) => {
         let pollerEmail = results[0].email;
         let publicPollKey = results[0].public_key;
-        let emailInfo = {
+        emailInfo = {
           'hostName': hostName,
           'privatePollKey': privatePollKey,
           'publicPollKey': publicPollKey,
           'pollerEmail': pollerEmail,
           'friendsEmail': friendsEmail
         };
-        sendEmail(emailInfo).toFriend().then((message) => {
-          if(message !== 'Queued. Thank you.') { res.status(400); }
-          res.end("Post Received");
-        });
-      });
+        return sendEmail(emailInfo).toFriend();
+    })
+    .then((message) => {
+      if(message !== 'Queued. Thank you.') {
+        res.status(400);
+      }
+      res.end("Post Received");
+    });
 
   });
 
   router.put('/polls/admin/:key', (req, res) => {
-    //OPEN AND CLOSES POLL
+    // CHECK IF BLANK IS BODY
+    if (!req.body) {
+      res.status(400);
+      return res.send("{'error': 'invalid request'}\n");
+    }
+    // OPEN AND CLOSES POLL
     const privatePollKey = req.params.key;
     const isOpen = !!req.body.isOpen;
-    knex('polls').update({'is_open': isOpen}).where('private_key', privatePollKey).then(() => {
-      res.redirect(`/polls/admin/${privatePollKey}`);
+    knex('polls')
+      .update({'is_open': isOpen})
+      .where('private_key', privatePollKey)
+      .then(() => {
+        res.redirect(`/polls/admin/${privatePollKey}`);
     });
   });
 
