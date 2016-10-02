@@ -123,7 +123,7 @@ module.exports = (knex) => {
         }
         else
         {
-          var templateVars = { success: false, errorMessage: "Server Error" };
+          var templateVars = { success: false, errorMessage: "Server Error. Did you type in the poll key correctly?" };
           res.render('twiml/rankPollResponse', templateVars);
 
           console.log( "Results:", results );
