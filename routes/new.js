@@ -54,7 +54,11 @@ module.exports = (knex) => {
         let description = optionDescription[index];
         titleDescriptionKnexPromises.push(
           knex('choices')
-            .insert({ 'poll_id': pollId, 'title': title, 'description': description, 'points': 0 })
+            .insert({
+              'poll_id': pollId,
+              'title': title,
+              'description': description,
+              'points': 0 })
             .then()
         );
       });
