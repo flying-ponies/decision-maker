@@ -1,7 +1,5 @@
 $( document ).ready( function (){
-  // registerDraggableElements();
   registerRankingElementChange();
-  // registerUnrankedElementChange();
   registerSubmitRanking();
 
   setOptionsContainerHeight();
@@ -16,12 +14,6 @@ function setOptionsContainerHeight() {
   container.css('height', (container.css('height')));
 }
 
-function registerDraggableElements() {
-  $( "ul.droptrue" ).sortable({
-    connectWith: "ul"
-  });
-}
-
 function registerRankingElementChange() {
   $( "#ranked-options" ).sortable({
     update: onRankedElementsChanged
@@ -33,26 +25,6 @@ function onRankedElementsChanged( event, ui ) {
   $children.each( function( index ) {
     $( this ).find( "span" ).text( String(index+1) );
   });
-}
-
-function registerUnrankedElementChange() {
-  $( "#unranked-options" ).sortable({
-    update: onUnrankedElementsChanged
-  });
-}
-
-function onUnrankedElementsChanged( event, ui ) {
-  var $children = $( this ).children();
-
-  if( $children.length === 0 ) {
-    $( "#submit-ranking" ).show();
-  }
-  else {
-    $children.each( function( index ) {
-      $( this ).find( "span" ).text( "" );
-    });
-    $( "#submit-ranking" ).hide();
-  }
 }
 
 function registerSubmitRanking() {
@@ -70,10 +42,9 @@ function onSubmitRanking(event) {
   var rankedChoices = [];
   $children.each( function( index ) {
     totalCount++;
-    var curRank = index + 1;//Number( $( this ).find( "span" ).text().slice(5) );
+    var curRank = index + 1;
     var curID = Number( $( this ).attr( "id" ));
     rankedChoices.push( { id: curID, rank: curRank } );
-    console.log( $( this ).text(), "Rank: ", curRank, "ID:", curID );
   });
   var bordaCount = totalCount;
   for( var i = 0; i < rankedChoices.length; i++ ) {
@@ -87,8 +58,16 @@ function onSubmitRanking(event) {
     data: { rankedChoices }
   })
   .done( function( msg ) {
-    $('<h1>Thank you for taking the poll!</h1>').replaceAll('#ranked-options').css('text-align', 'center');
+    $('<span class="emphasize" style="margin-bottom: 1em;">Thank you for taking the poll!</span>').replaceAll('#ranked-options').css('text-align', 'center');
     $('#submit-ranking').remove();
+    $('.section-container.options header p.lead').remove();
+    $('.section-container.options header h3').text('Results Submitted');
+    $('<button>')
+      .addClass('btn btn-default btn-lg')
+      .text('Make a New Poll')
+      .appendTo($('<a>').attr('href', '/').appendTo('.section-container.options'));
+    $('.section-container.options').css('text-align', 'center');
+    setOptionsContainerHeight();
   })
   .fail( function(err) {
   });

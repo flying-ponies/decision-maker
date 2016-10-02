@@ -2,14 +2,20 @@
 <html lang="en">
 <%- include('partials/head') %>
   <body>
-    <script type="text/javascript" src="/scripts/ranking.js"></script>
-<%- include('partials/header') %>
+    <%- include('partials/header') %>
     <div class="container">
       <h2><%= question %></h2>
       <p class="lead">Your friend at <%= email %> wants to know:<br>
-        <strong><%= question %></strong><br><br>
-        <span class="emphasize">you have taken this poll already!</span><br>
-        Please come back to this page once your friend closes the poll to view the results.</p>
+        <strong><%= question %></strong>
+      </p>
+      <span class="emphasize">you have taken this poll already!</span>
+      <p>Please come back to this page once your friend closes the poll to view the results.</p>
+      <div class="section-container">
+        <header>
+          <h3>Be Democratic?</h3>
+        </header>
+        <p class="text-center"><a href="/"><button type="button" class="btn btn-default btn-lg">Make a New Poll</button></a></p>
+      </div><!-- /.section-container -->
     </div><!-- /.container -->
     <%- include('partials/footer') %>
   </body>

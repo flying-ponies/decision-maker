@@ -11,8 +11,6 @@ $footer_height: 100px;
 $font_main: 'Lato', 'Helvetica Neue', Helvetica, sans-serif;
 $font_headers: 'Bungee', $font_main;
 
-/* Sticky footer styles
--------------------------------------------------- */
 html {
   position: relative;
   min-height: 100%;
@@ -27,6 +25,7 @@ html {
 body {
   font-family: $font_main;
   margin-bottom: $footer_height + 20px;
+  font-size: 16px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -37,7 +36,6 @@ footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  /* Set the fixed height of the footer here */
   height: $footer_height;
   border-top: 1px solid $color_primary;
   padding: 3em 0;
@@ -53,8 +51,9 @@ footer {
 }
 
 span.emphasize {
-  font-size: 2em;
+  font-size: 2.5em;
   font-family: $font_headers;
+  display: block;
 }
 
 .page-header {
@@ -89,6 +88,7 @@ span.emphasize {
 }
 
 #ranked-options {
+  color: #333;
   .poll-option {
     padding: 1em;
     background-color: #fff;
@@ -137,6 +137,8 @@ span.emphasize {
   &.options {
     background-color: $color_secondary;
     padding-bottom: 1.5em;
+    color: #fff;
+
     header {
       border-color: $color_primary;
     }
@@ -249,6 +251,7 @@ form {
 }
 
 .btn.btn-default {
+  margin-bottom: 1em;
   background-color: $color_primary;
   color: #fff;
   border-color: darken($color_primary, 5%);

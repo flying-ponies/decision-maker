@@ -49,7 +49,7 @@
       <% if (totalVotes > 0) { %>
         <h4>Total votes: <%= totalVotes %></h4>
       <% } else { %>
-        <p class="lead">No votes yet. Support democracy by <a href="#sendSMS">sending the poll</a> to your friends.</p>
+        <p class="lead">No votes yet. Support democracy by <a href="#send-poll">sending the poll</a> to your friends.</p>
       <% } %>
         </header>
       <% choices.forEach((choice, index) => { %>
@@ -62,7 +62,7 @@
 
       <%# If the poll is open, show the forms for sending the poll. %>
       <% if (isOpen) { %>
-      <div class="section-container">
+      <div id="send-poll" class="section-container">
         <header>
           <h3>Send the poll</h3>
         </header>
