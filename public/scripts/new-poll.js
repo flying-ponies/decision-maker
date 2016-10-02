@@ -1,4 +1,65 @@
 $(function () {
+  $('#new-poll-form').submit(function (e) {
+    var $form = $(this);
+    var $question = $('#question');
+    var $optionTitles = $form.find('input[id|="option-title"]');
+    var $email = $('#email');
+    var err = false;
+
+    $form.find('span.help-block').remove();
+    $form.find('span.glyphicon.glyphicon-warning-sign.form-control-feedback').remove();
+    $form.find('.has-error.has-feedback').removeClass('has-error has-feedback');
+
+    // Validate question input (check if there is any input at all)
+    if ($question.val() === '' || $question.val() === undefined || $question.val() === null) {
+      err = true;
+      $question.parent().addClass('has-error has-feedback');
+      $('<span>')
+        .addClass('glyphicon glyphicon-warning-sign form-control-feedback')
+        .attr('aria-hidden', 'true')
+        .appendTo($question.parent());
+      $('<span>')
+        .addClass('help-block')
+        .text('Enter a question')
+        .insertAfter($question);
+    }
+
+    // Validate option titles input (each option should have something written in the title)
+    $optionTitles.each(function(index) {
+      if ($(this).val() === '' || $(this).val() === undefined || $(this).val() === null) {
+        err = true;
+        $(this).parent().addClass('has-error has-feedback');
+        $(this).parent().append($('<span>')
+          .addClass('glyphicon glyphicon-warning-sign form-control-feedback')
+          .attr('aria-hidden', 'true'));
+        $('<span>')
+          .addClass('help-block')
+          .text('Enter an option')
+          .insertAfter($(this));
+      }
+    });
+
+    // Check for a valid email
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (!re.test($email.val())) {
+      err = true;
+      $email.parent().addClass('has-error has-feedback');
+      $('<span>')
+        .addClass('glyphicon glyphicon-warning-sign form-control-feedback')
+        .attr('aria-hidden', 'true')
+        .appendTo($email.parent());
+      $('<span>')
+        .addClass('help-block')
+        .text('Enter a valid email')
+        .insertAfter($email);
+    }
+
+    if (err) {
+      e.preventDefault();
+    }
+  });
+
   let optionNum = 3;
 
   // Focus on the question input initially
