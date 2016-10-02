@@ -60,7 +60,7 @@ module.exports = (knex) => {
             totalNumberOfPoints--;
           }
           else {
-            templateVars = { success: false, errorMessage: "Poll expected choice to be from 1 to " + (results.length + 1) + " received " + ranking.length };
+            templateVars = { success: false, errorMessage: "Poll expected choice to be from 1 to " + results.length + " received " + ranking[i] };
             res.render('twiml/rankPollResponse', templateVars);
 
             return null;
