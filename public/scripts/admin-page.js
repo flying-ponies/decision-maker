@@ -3,8 +3,13 @@ $( document ).ready( function () {
   $('form#sendEmail').on('submit', function(event) {
     event.preventDefault();
     var form = $(this);
-    var textElement = form.parent().find('p');
-    $('div.well p').text("");
+    var textElement = form.parent().find('span.send-response');
+
+    if (!checkEmail($('#email').val())) {
+      textElement.text("Not a valid email");
+      return;
+    }
+
     $.ajax({
       url: '/polls/admin/' + form.find('input[name="private_key"]').val(),
       method: 'POST',
@@ -23,7 +28,8 @@ $( document ).ready( function () {
     event.preventDefault();
     var form = $(this);
     var phoneNumber = formatPhoneNumber($('#phone-number').val());
-    var textElement = form.parent().find('p');
+    var textElement = form.parent().find('span.send-response');
+
     if (!checkPhoneNumber(phoneNumber)) {
       textElement.text("Not a valid phone number");
       return;
@@ -31,7 +37,6 @@ $( document ).ready( function () {
 
     $('#phone-number').val(phoneNumber);
 
-    $('div.well p').text("");
     $.ajax({
       url: '/sms/sendpoll',
       method: 'POST',
@@ -64,9 +69,8 @@ function checkPhoneNumber(phoneNumber) {
   }
 }
 
+function checkEmail(email) {
+  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-
-
-
-
-
+  return re.test(email);
+}
