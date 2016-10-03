@@ -231,6 +231,9 @@ span.emphasize {
 
 form {
   margin-bottom: 2em;
+  &#sendSMS, &#sendEmail {
+    margin-bottom: 0;
+  }
 }
 
 .form-control {

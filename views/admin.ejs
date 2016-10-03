@@ -69,12 +69,12 @@
         <div class="row">
           <div class="col-sm-6">
             <div class="well">
-              <h4>Message the poll to your friends!</h4>
+              <h4>Text Message</h4>
               <form id="sendSMS" action="/sms/sendpoll" method="post">
                 <div class="form-group">
                   <label for="phone-number">Phone number</label>
                   <input type="tel" class="form-control" id="phone-number" name="phone-number" placeholder="604-123-4321" aria-describedby="phone-number-help">
-                  <span id="phone-number-help" class="help-block">Enter a phone number and we&rsquo;ll send the poll in an sms message.</span>
+                  <span id="phone-number-help" class="help-block">Send the poll in a text.</span>
                   <input type="hidden" name="private_key" value="<%= privatePollKey %>">
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
@@ -84,12 +84,12 @@
           </div>
           <div class="col-sm-6">
             <div class="well">
-              <h4>Email the poll to your friends!</h4>
+              <h4>Email</h4>
               <form id="sendEmail" action="#sendEmail" method="post">
                 <div class="form-group">
                   <label for="email">Email</label>
                   <input type="email" class="form-control" id="email" name="email" placeholder="friend@example.com" aria-describedby="email-help">
-                  <span id="email-help" class="help-block">Enter an email and we&rsquo;ll send the poll.</span>
+                  <span id="email-help" class="help-block">Send the poll in an email.</span>
                   <input type="hidden" name="private_key" value="<%= privatePollKey %>">
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
