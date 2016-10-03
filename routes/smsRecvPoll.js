@@ -44,7 +44,7 @@ module.exports = (knex) => {
       .then((results) => {
         if( results.length !== ranking.length ){
 
-          templateVars = { success: false, errorMessage: "Poll expected " + results.length + " received " + ranking.length };
+          templateVars = { success: false, errorMessage: "Poll expected " + results.length + " received " + ranking.length + " ranked choices" };
           res.render('twiml/rankPollResponse', templateVars);
 
           return null;

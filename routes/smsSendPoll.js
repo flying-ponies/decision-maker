@@ -22,7 +22,7 @@ module.exports = (knex) => {
       .then((results) => {
         if (results.length) {
           smsPoll += results[0].question;
-          smsPoll += "\nInclude " + results[0].public_key.slice(0, 4) + " at the start of your sms";
+          smsPoll += "\nInclude " + results[0].public_key.slice(0, 4) + " at the start of your sms, and rank ALL choices by listing them by number";
           for( var i = 0; i < results.length; i++ ) {
             smsPoll += "\n" + (Number(i)+1) + " " + results[i].title;
           }
