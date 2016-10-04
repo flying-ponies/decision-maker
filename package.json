@@ -1,7 +1,7 @@
 {
-  "name": "node-skeleton",
+  "name": "democratiser",
   "version": "1.0.0",
-  "description": "",
+  "description": "Full stack web app to help groups make decisions together",
   "main": "server.js",
   "engines": {
     "node": "6.6.0"
@@ -13,7 +13,16 @@
     "knex": "./node_modules/.bin/knex"
   },
   "author": "Lighthouse Labs",
+  "contributors": [
+      "Devin Murnane",
+      "John Chow",
+      "Alexander Draper"
+    ],
   "license": "ISC",
+  "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/flying-ponies/decision-maker.git"
+    },
   "dependencies": {
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
