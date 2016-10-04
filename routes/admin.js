@@ -49,7 +49,7 @@ module.exports = (knex) => {
   });
 
   router.post('/polls/admin/:key', (req, res) => {
-    // CHECK IF BLANK IS BODY
+    // CHECK IF BODY IS BLANK
     if (!req.body.email) {
       res.status(400);
       return res.send("{'error': 'invalid request'}\n");
@@ -86,7 +86,7 @@ module.exports = (knex) => {
   });
 
   router.put('/polls/admin/:key', (req, res) => {
-    // CHECK IF BLANK IS BODY
+    // CHECK IF BODY IS BLANK
     if (!req.body) {
       res.status(400);
       return res.send("{'error': 'invalid request'}\n");

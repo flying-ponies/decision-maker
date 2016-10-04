@@ -12,7 +12,7 @@ module.exports = (knex) => {
   });
 
   router.post('/polls', (req, res) => {
-    //CHECK IF BLANK IS BODY
+    // CHECK IF BODY IS BLANK
     if (!req.body) {
       res.status(400);
       return res.send("{'error': 'invalid request'}\n");
