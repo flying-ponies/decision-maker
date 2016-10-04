@@ -35,7 +35,7 @@ module.exports = (knex) => {
     var totalNumberOfPoints = ranking.length;
     var rankedChoices = [];
     var templateVars = {};
-    console.log( "pollID:", pollID );
+
     knex
       .select( "id" )
       .from( "choices" )
@@ -54,8 +54,6 @@ module.exports = (knex) => {
               ranking[i] - 1 >= 0 ){
             var curID = results[ ranking[i] - 1 ].id;
 
-            console.log( "curID", curID );
-
             rankedChoices.push( { "id": curID, borda: totalNumberOfPoints } );
             totalNumberOfPoints--;
           }
@@ -66,7 +64,7 @@ module.exports = (knex) => {
             return null;
           }
         }
-        console.log( "rankedChoices", rankedChoices );
+
         cb( { rankedChoices } );
       });//then
   }
@@ -79,12 +77,7 @@ module.exports = (knex) => {
     var domain = (String(req.rawHeaders).split(","))[1];
 
     var path = req.url;
-    //console.log( "****************************** Req *************************\n", req );
-/*
-    const rankedChoices = req.body.rankedChoices;
-    const publicPollKey = req.params.key;
-    //const hostName = req.headers.host;
-*/
+
     var processedBody = smsBody.replace(/[^A-Za-z0-9]/g, ' ').replace(/\s+/g, ' ').trim();
     var bodyArray = processedBody.split(' ');
     var pubkeyFragment = bodyArray[0];
@@ -95,7 +88,6 @@ module.exports = (knex) => {
       return router;
     }
 
-    console.log( "***Body Array***:", bodyArray );
     knex
       .select( "polls.id", "public_key" )
       .from( "phone_numbers" )
@@ -111,8 +103,6 @@ module.exports = (knex) => {
               var templateVars = { success: true, errorMessage: "" };
               res.render('twiml/rankPollResponse', templateVars);
 
-              console.log( "domain: ", domain );
-
               request.post( "http://" + domain + "/polls/" + results[0].public_key).form( rankedChoices );
             }
             else {
@@ -126,7 +116,6 @@ module.exports = (knex) => {
           var templateVars = { success: false, errorMessage: "Server Error. Did you type in the poll key correctly?" };
           res.render('twiml/rankPollResponse', templateVars);
 
-          console.log( "Results:", results );
           console.log( "Database issue, results of sql query not exactly 1" );
           res.status(404)
           res.send("404 - Page not found")

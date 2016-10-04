@@ -9,7 +9,7 @@ module.exports = (knex) => {
   router.post( '/sms/sendpoll', (req, res) => {
     const phoneNumber = req.body["phone-number"];
     const privateKey = req.body.private_key;
-    console.log( privateKey );
+
     var smsPoll = "";
     var pollID;
 
@@ -35,15 +35,12 @@ module.exports = (knex) => {
 
         pollID = results[0]["id"];
 
-        console.log( "pollID: ", pollID );
-        console.log( "results[0]:", results[0] );
-
         knex
           .select("id")
           .from("phone_numbers")
           .where("phone_number", phoneNumber)
           .then((rowsA) => {
-            console.log( "***Top Rows***", rowsA );
+
             if( rowsA.length ) { //for obeying the uniqueness of phone_numbers
               return [rowsA[0]["id"]];
             }
@@ -51,14 +48,11 @@ module.exports = (knex) => {
               var temp = knex( "phone_numbers" )
                 .insert( {phone_number: phoneNumber} )
                 .returning( "id" );
-              console.log( "phone number", temp );
+
               return temp;
             }
           }).then((rowsB) => {
-            console.log( "returned phone id rows: ", rowsB );
             if( rowsB ){
-
-              console.log( "rowsB, pollID", rowsB, pollID );
 
               knex
                 .select( "phone_number_id", "poll_id" )
@@ -72,7 +66,6 @@ module.exports = (knex) => {
                         {phone_number_id: rowsB[0], poll_id: pollID}
                        ).then((results) =>{ res.end('ADMIN PAGE');})
                   }
-
                 });
 
             }
